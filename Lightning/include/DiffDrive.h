@@ -25,10 +25,11 @@ class SensorInterface
 
 class EncoderWheelSensorInterface : public SensorInterface
 {
-    pros::ADIEncoder encoder;
+    pros::ADIEncoder encoderL;
+    pros::ADIEncoder encoderR;
 
     public:
-        EncoderWheelSensorInterface(pros::ADIEncoder encoder);
+        EncoderWheelSensorInterface(pros::ADIEncoder encoderL, pros::ADIEncoder encoderR);
         double Get();
         void Reset();
 };
@@ -47,7 +48,6 @@ class DiffDrive
             double getPositionPID() override;
             void setVelocityPID(double value) override;
     };
-
     class TurnInterface : public PIDInterface
     {
         DiffDrive* parent;
@@ -58,7 +58,6 @@ class DiffDrive
             double getPositionPID() override;
             void setVelocityPID(double value) override;
     };
-    
     class DriveSensorInterface : public SensorInterface
     {
         Mines::MinesMotorGroup left;

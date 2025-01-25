@@ -1,36 +1,32 @@
 #include "../include/botFunctions.h"
-
-bool intakeToggle = 0;
-bool flywheelToggle = 0;
-bool mogoToggle = 0;
-
-void toggleIntake()
-{
-    if(intakeToggle == 0)
-        intakeToggle = 1;
-    else
-        intakeToggle = 0;
-}
-
-void toggleFlywheels()
-{
-    if(flywheelToggle == 0)
-        flywheelToggle = 1;
-    else
-        flywheelToggle = 0;
-}
-
-void toggleMOGO()
-{
-    if(mogoToggle == 0)
-        mogoToggle = 1;
-    else
-        mogoToggle = 0;
-}
+#include "pros/motors.h"
+#include "pros/rtos.hpp"
 
 void driveLoop(Mines::MinesMotorGroup leftMotorGroup, Mines::MinesMotorGroup rightMotorGroup, double leftVelocity, double rightVelocity)
 {
     leftMotorGroup.move(leftVelocity);
     rightMotorGroup.move(rightVelocity);
 }
+
+void catLaunch(Mines::MinesMotorGroup cataMotors, double velocity)
+{
+    cataMotors.move(velocity);
+    pros::delay(250);
+    cataMotors.brake();
+}
+
+
+void catPrime(Mines::MinesMotorGroup cataMotors, pros::ADIDigitalIn limitSwitch, double velocity)
+{
+    cataMotors.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+    while(limitSwitch.get_value() == false)
+    {
+        cataMotors.move(velocity);
+        pros::delay(10);
+    }
+cataMotors.brake();
+
+
+}
+
 

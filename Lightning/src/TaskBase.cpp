@@ -13,8 +13,7 @@ void TaskBase::taskTrampoline(void* arg)
     taskBasePtr->updateTask();
 }
 
-void TaskBase::StartTask(std::string taskName)
-{
+void TaskBase::StartTask(std::string taskName){
     pros::Task my_task(taskTrampoline, this, taskName.c_str());
     taskPtr = &my_task;
 }

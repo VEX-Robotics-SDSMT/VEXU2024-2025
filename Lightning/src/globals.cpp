@@ -5,8 +5,10 @@ pros::Controller MasterController (pros::E_CONTROLLER_MASTER);
 
 pros::Imu intertialSensor(INERTIAL_SENSOR);
 pros::Vision vision(VISION_SENSOR);
-pros::ADIEncoder driveEncoder(ENCODER_TOP, ENCODER_BOTTOM, true);
-pros::GPS gps(VEX_GPS);
+pros::ADIEncoder driveEncoderR(ENCODER_TOP_R, ENCODER_BOTTOM_R, false);
+pros::ADIEncoder driveEncoderL(ENCODER_TOP_L, ENCODER_BOTTOM_L, false);
+
+//pros::GPS gps(VEX_GPS);
 
 //RED Motors E_MOTOR_GEARSET_36
 //GREEN Motors E_MOTOR_GEARSET_18
@@ -19,19 +21,16 @@ pros::Motor rightFront(R_FRONT, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor rightMid(R_MID, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor rightRear(R_REAR, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor intake(INTAKE, pros::E_MOTOR_GEARSET_18, true);
-pros::Motor convL(COVEL, pros::E_MOTOR_GEARSET_06, true);
-pros::Motor convR(COVER, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor lift_r(LIFTR, pros::E_MOTOR_GEARSET_36, true);
-pros::Motor lift_l(LIFTL, pros::E_MOTOR_GEARSET_36, false);
+pros::Motor convL(CONV_L, pros::E_MOTOR_GEARSET_06, true);
+pros::Motor convR(CONV_R, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor arm(ARM, pros::E_MOTOR_GEARSET_36, true);
 
 std::vector<pros::Motor> leftDriveVector = {leftFront, leftMid, leftRear};
 std::vector<pros::Motor> rightDriveVector = {rightFront, rightMid, rightRear};
 std::vector<pros::Motor> conveyorVector = {convL, convR};
-std::vector<pros::Motor> liftVector = {lift_r, lift_l};
 Mines::MinesMotorGroup leftDriveMotors(leftDriveVector);
 Mines::MinesMotorGroup rightDriveMotors(rightDriveVector);
 Mines::MinesMotorGroup conveyorMotors(conveyorVector);
-Mines::MinesMotorGroup liftMotors(liftVector);
 
 pros::ADIDigitalOut mogo(MOGO);
 

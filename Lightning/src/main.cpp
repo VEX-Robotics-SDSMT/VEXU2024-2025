@@ -1,8 +1,11 @@
-#include "main.h"
+#include "../include/main.h"
 #include "DiffDrive.h"
 #include "botFunctions.h"
 #include "globals.h"
+#include "pros/misc.h"
+#include "pros/motors.h"
 #include "pros/rtos.h"
+#include "pros/rtos.hpp"
 
 //globals
 
@@ -32,9 +35,9 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 
-void initialize() 
+void initialize()
 {
-	intertialSensor.reset();
+	//intertialSensor.reset();
 	//pros::vision_signature_s_t RED_GOAL_SIG = vision.signature_from_utility(1, 4391, 7505, 5948, -1303, -147, -725, 1.6, 0);
 	//vision.set_signature(RED_GOAL_SIG_ID, &RED_GOAL_SIG);
 	//pros::vision_signature_s_t BLUE_GOAL_SIG = vision.signature_from_utility(2, -3073, -1323, -2198, 4405, 9923, 7164, 1.5, 0);
@@ -57,10 +60,11 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() 
+void competition_initialize()
 {
 	//Skills?
 }
+
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -74,40 +78,26 @@ void competition_initialize()
  */
 void autonomous() 
 {
-	/*
-	EncoderWheelSensorInterface encoderInterface(driveEncoder);
+	
+	EncoderWheelSensorInterface encoderInterface(driveEncoderL,driveEncoderR);
 	DiffDrive drive(leftDriveMotors, rightDriveMotors, &encoderInterface, intertialSensor);
-	drive.setDrivePIDVals(2, 0, 0);
+	drive.setDrivePIDVals(0.75, 0, 1); //0.75
 	drive.setDrivePIDTol(50);
-	drive.setTurnPIDVals(3.5, 0, 5); //tuned 10/19/2024
+	drive.setTurnPIDVals(4.25, 0, 0); //4.25
 	drive.setTurnPIDTol(2);
-	drive.setMaxDriveSpeed(1); 
-	drive.setMaxTurnSpeed(0.8); //tuned 10/19/2024
+	drive.setMaxDriveSpeed(0.75); 
+	drive.setMaxTurnSpeed(0.8);
 
 	drive.setMaxDriveAccel(0.12);
 
-	//drive.turnDegreesAbsolute(180);
-	//drive.turnDegreesAbsolute(0);
+	drive.turnDegreesAbsolute(180);
+	drive.turnDegreesAbsolute(0);
 
-	drive.driveTiles(1000);
+	//drive.driveTiles(1000);
+	//drive.driveTiles(-1000);
+	
+	
 	//*/
-	mogo.set_value(0);
-	rightDriveMotors.move(-100);
-	leftDriveMotors.move(-100);
-	pros::delay(700);
-	rightDriveMotors.brake();
-	leftDriveMotors.brake();
-	mogo.set_value(1);
-	intake.move(-127);
-	conveyorMotors.move(-127);
-	rightDriveMotors.move(60);
-	leftDriveMotors.move(60);
-	pros::delay(800);
-	rightDriveMotors.move(20);
-	leftDriveMotors.move(20);
-	pros::delay(1000);
-	rightDriveMotors.brake();
-	leftDriveMotors.brake();
 }
 
 /**
@@ -127,6 +117,7 @@ void autonomous()
 void opcontrol()
 {
 	bool togMOGO = 0;
+	arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	while(true)
 	{	
 		// ********************DRIVE********************
@@ -155,7 +146,7 @@ void opcontrol()
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
 
 
-		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
+		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
 			if(togMOGO == 1)
 				togMOGO = 0;
 			else
@@ -180,18 +171,18 @@ void opcontrol()
 			conveyorMotors.brake();
 		}
 
-		//lifting
-		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_X))
+		//arm
+		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 		{
-			liftMotors.moveVelocity(600);
+			arm.move_velocity(600);
 		}
-		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
 		{
-			liftMotors.moveVelocity(-600);
+			arm.move_velocity(-600);
 		}
 		else
 		{
-			liftMotors.brake();
+			arm.brake();
 		}
 
 		//*********************************************

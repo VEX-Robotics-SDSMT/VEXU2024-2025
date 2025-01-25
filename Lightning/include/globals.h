@@ -3,26 +3,28 @@
 
 #include "api.h"
 #include "MinesMotorGroup.h"
+#include "pros/adi.hpp"
 
-#define INERTIAL_SENSOR 19
+#define INERTIAL_SENSOR 2
 #define VISION_SENSOR 4
 #define VEX_GPS 5
-#define ENCODER_TOP 3
-#define ENCODER_BOTTOM 2
+#define ENCODER_TOP_R 2
+#define ENCODER_BOTTOM_R 1
+#define ENCODER_TOP_L 6
+#define ENCODER_BOTTOM_L 5
 
-#define L_FRONT 20
-#define L_MID 19
-#define L_REAR 18
-#define R_FRONT 16
-#define R_MID 15
-#define R_REAR 14
-#define COVEL 1
-#define COVER 2
-#define INTAKE 9
-#define LIFTR 13
-#define LIFTL 21
+#define L_FRONT 13
+#define L_MID 14
+#define L_REAR 11
+#define R_FRONT 20
+#define R_MID 12
+#define R_REAR 15
+#define CONV_R 9
+#define CONV_L 8
+#define INTAKE 19
+#define ARM 17
 
-#define MOGO 1
+#define MOGO 8
 
 
 #define INTAKE_MOTOR_GEARSET redGearbox
@@ -33,8 +35,9 @@ extern pros::Controller MasterController;
 
 extern pros::Imu intertialSensor;
 extern pros::Vision vision;
-extern pros::ADIEncoder driveEncoder;
-extern pros::GPS gps;
+extern pros::ADIEncoder driveEncoderL;
+extern pros::ADIEncoder driveEncoderR;
+//extern pros::GPS gps;
 
 extern pros::Motor leftFront;
 extern pros::Motor leftMid;
@@ -45,8 +48,7 @@ extern pros::Motor rightRear;
 extern pros::Motor intake;
 extern pros::Motor convR;
 extern pros::Motor convL;
-extern pros::Motor lift_r;
-extern pros::Motor lift_l;
+extern pros::Motor arm;
 
 extern std::vector<pros::Motor> leftDriveVector;
 extern std::vector<pros::Motor> rightDriveVector;
@@ -55,7 +57,6 @@ extern std::vector<pros::Motor> liftVector;
 extern Mines::MinesMotorGroup leftDriveMotors;
 extern Mines::MinesMotorGroup rightDriveMotors;
 extern Mines::MinesMotorGroup conveyorMotors;
-extern Mines::MinesMotorGroup liftMotors;
 
 extern pros::ADIDigitalOut mogo;
 

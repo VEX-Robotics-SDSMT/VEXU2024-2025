@@ -6,15 +6,9 @@
 #include "pros/motors.h"
 
 void driveLoop(Mines::MinesMotorGroup leftMotorGroup, Mines::MinesMotorGroup rightMotorGroup, double leftVelocity, double rightVelocity);
-void rollerLoop(pros::Motor rollerMotor, int pct, bool runButton);
-void intakeLoopHold(Mines::MinesMotorGroup intakeMotors, int pct, bool runButton, bool revButton);
-void flywheelLoopToggle(Mines::MinesMotorGroup flywheels, int pct);
-void compressLoopToggle(pros::ADIDigitalOut compress);
-void toggleFlywheels();
-void toggleMOGO();
-void shootDisk();
-void shoot3Disk();
-Color getColor(pros::c::optical_rgb_s_t color);
-void swapRollerColor(Color color, double voltage);
+void catLaunch(Mines::MinesMotorGroup cataMotors, double velocity);
+void catPrime(Mines::MinesMotorGroup cataMotors, pros::ADIDigitalIn limitSwitch, double velocity);
+//Color getColor(pros::c::optical_rgb_s_t color);
+//void swapRollerColor(Color color, double voltage);
 
 #endif

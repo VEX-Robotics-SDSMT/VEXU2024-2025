@@ -12,16 +12,18 @@ DiffDrive::DiffDrive(MinesMotorGroup left, MinesMotorGroup right, pros::IMU imu)
 {
     MAX_SPEED = rightMotors.getMaxVelocity();
 
+    logger.Log("status: constructor called", 10, LoggerSettings::verbose);
+
     DriveSensorInterface driveSensors(left, right);
     driveSensorInterface = &driveSensors;
     driveSensorInterface->Reset();
     StartPIDs();
 }
 
-DiffDrive::DiffDrive(MinesMotorGroup left, MinesMotorGroup right, SensorInterface *driveSensors, pros::Imu imu) :
+DiffDrive::DiffDrive(MinesMotorGroup left, MinesMotorGroup right, SensorInterface *driveSensors, pros::Imu imu):
     leftMotors(left), rightMotors(right), inertial(imu),
     driveInterface(this), turnInterface(this),
-    drivePID(&driveInterface, LoggerSettings::none), turnPID(&turnInterface, LoggerSettings::none),
+    drivePID(&driveInterface, LoggerSettings::verbose), turnPID(&turnInterface, LoggerSettings::none),
     logger(LoggerSettings::none)
 {
     MAX_SPEED = rightMotors.getMaxVelocity();
@@ -42,7 +44,8 @@ DiffDrive::~DiffDrive()
 // Look at this
 double DiffDrive::getDriveVelocity()
 {
-    return (leftMotors.getActualVelocity() + rightMotors.getActualVelocity()) / 2;
+    //logger.Log("driveVelocity: " + std::to_string((leftMotors.getActualVelocity() + rightMotors.getActualVelocity()) / 2), 5, verbose);
+    return (leftMotors.getActualVelocity() + rightMotors.getActualVelocity()) / 2;    
 }
 
 double DiffDrive::getTurnVelocity()
@@ -87,7 +90,7 @@ void DiffDrive::turnDegreesAbsolute(double target, bool waitForCompletion)
             pros::c::delay(20);
         }
     }
-}
+}   
 
 void DiffDrive::turnDegreesAbsolute(double target, int timeOut)
 {
@@ -158,9 +161,9 @@ void DiffDrive::setDriveVelocity(double value)
     double dyanamicMax = fabs(getDriveVelocity()) + adjustedDriveMaxAccel;
     double clampedVal = std::clamp(value, -dyanamicMax, dyanamicMax);
 
-    logger.Log("adj: " + std::to_string(adjustedDriveMaxAccel) +
-    " dyn: " + std::to_string(dyanamicMax), 3, LoggerSettings::verbose);
-    logger.Log("Target drive velocity: " + std::to_string(clampedVal), 4, LoggerSettings::verbose);
+    //logger.Log("adj: " + std::to_string(adjustedDriveMaxAccel) +
+    //" dyn: " + std::to_string(dyanamicMax), 3, LoggerSettings::verbose);
+    //logger.Log("Target drive velocity: " + std::to_string(clampedVal), 4, LoggerSettings::verbose);
 
     driveVelocity = clampedVal;
     setMotorVelocities();
@@ -199,6 +202,33 @@ void DiffDrive::setTurnVelocity(double value)
     setMotorVelocities();
 }
 
+// void DiffDrive::setMotorVelocities()
+// {
+//     double adjustedDriveMax = MAX_DRIVE_PERCENT * MAX_SPEED;
+//     double adjustedTurnMax = MAX_TURN_PERCENT * MAX_SPEED;
+
+//     double adjustedDriveVelocity = clamp(driveVelocity, -adjustedDriveMax, adjustedDriveMax);
+//     double adjustedTurnVelocity = clamp(turnVelocity, -adjustedTurnMax, adjustedTurnMax);
+
+//     double targetLeftSpeed = adjustedDriveVelocity + adjustedTurnVelocity;
+//     double targetRightSpeed = adjustedDriveVelocity - adjustedTurnVelocity;
+
+//     double scaleFactor = min(MAX_SPEED / max(fabs(targetLeftSpeed), fabs(targetRightSpeed)), 1.0);
+
+//     // Version one of velocity->voltage calculation. People on forums posted data showing a NEARLY linear relationship,
+//     // so I'm trying it linear for now, and more work can be done later if this yields unacceptable results.
+//     int targetLeftVoltage = ((targetLeftSpeed * scaleFactor) * 12000) / 127;
+//     int targetRightVoltage = ((targetRightSpeed * scaleFactor) * 12000) / 127;
+
+//     if (ACTIVE)
+//     {
+//         // leftMotors.moveVelocity(targetLeftSpeed * scaleFactor);
+//         // rightMotors.moveVelocity(targetRightSpeed * scaleFactor);
+//         leftMotors.moveVoltage(targetLeftVoltage);
+//         rightMotors.moveVoltage(targetRightVoltage);
+//     }
+// }
+
 void DiffDrive::setMotorVelocities()
 {
     double adjustedDriveMax = MAX_DRIVE_PERCENT * MAX_SPEED;
@@ -211,18 +241,20 @@ void DiffDrive::setMotorVelocities()
     double targetRightSpeed = adjustedDriveVelocity - adjustedTurnVelocity;
 
     double scaleFactor = min(MAX_SPEED / max(fabs(targetLeftSpeed), fabs(targetRightSpeed)), 1.0);
+     logger.Log("MAX_SPEED: " + std::to_string(MAX_SPEED), 0, verbose);
+      logger.Log("LEFT: " + std::to_string(adjustedDriveMax), 1, verbose);
+       logger.Log("RIGHT: " + std::to_string(adjustedTurnMax), 2, verbose);
+    logger.Log("LEFT: " + std::to_string(driveVelocity), 3, verbose);
+    logger.Log("RIGHT: " + std::to_string(turnVelocity), 4, verbose);
 
-    // Version one of velocity->voltage calculation. People on forums posted data showing a NEARLY linear relationship,
-    // so I'm trying it linear for now, and more work can be done later if this yields unacceptable results.
-    int targetLeftVoltage = ((targetLeftSpeed * scaleFactor) * 12000) / 127;
-    int targetRightVoltage = ((targetRightSpeed * scaleFactor) * 12000) / 127;
-
+    logger.Log("Active: " + std::to_string(ACTIVE), 5, verbose);
+    logger.Log("Scale Factor: " + std::to_string(scaleFactor), 6, verbose);
+    
     if (ACTIVE)
     {
-        // leftMotors.moveVelocity(targetLeftSpeed * scaleFactor);
-        // rightMotors.moveVelocity(targetRightSpeed * scaleFactor);
-        leftMotors.moveVoltage(targetLeftVoltage);
-        rightMotors.moveVoltage(targetRightVoltage);
+        logger.Log("velocity to motors: " + std::to_string(targetLeftSpeed * scaleFactor), 7, verbose);
+        leftMotors.moveVelocity(targetLeftSpeed * scaleFactor);
+        rightMotors.moveVelocity(targetRightSpeed* scaleFactor);
     }
 }
 
@@ -312,19 +344,21 @@ void SensorInterface::Reset()
 
 
 //Encoder Wheel Sensor
-EncoderWheelSensorInterface::EncoderWheelSensorInterface(pros::ADIEncoder encoder) : encoder(encoder) {}
+EncoderWheelSensorInterface::EncoderWheelSensorInterface(pros::ADIEncoder encoderL, pros::ADIEncoder encoderR) : encoderL(encoderL), encoderR(encoderR) {}
 
 double EncoderWheelSensorInterface::Get()
 {
-    double sensorVal = encoder.get_value();
-    std::cout << "encoder val: " << sensorVal <<"errno:" <<errno <<  "\n";
-
-    return sensorVal;
+    double sensorValL = encoderL.get_value();
+    double sensorValR = encoderR.get_value();
+    //std::cout << "encoder val: " << sensorVal <<"errno:" <<errno <<  "\n";
+    double avg = -(sensorValL - sensorValR) / 2;
+    return avg;
 }
 
 void EncoderWheelSensorInterface::Reset()
 {
-    encoder.reset();
+    encoderL.reset();
+    encoderR.reset();
 }
 
 //Motor Wheel Sensor
