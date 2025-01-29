@@ -6,7 +6,7 @@
 #include "pros/adi.hpp"
 
 #define INERTIAL_SENSOR 2
-#define VISION_SENSOR 4
+#define COLOR_SENSOR 4
 #define VEX_GPS 5
 #define ENCODER_TOP_R 2
 #define ENCODER_BOTTOM_R 1
@@ -34,7 +34,7 @@
 extern pros::Controller MasterController;
 
 extern pros::Imu intertialSensor;
-extern pros::Vision vision;
+extern pros::Optical colorSensor;
 extern pros::ADIEncoder driveEncoderL;
 extern pros::ADIEncoder driveEncoderR;
 //extern pros::GPS gps;

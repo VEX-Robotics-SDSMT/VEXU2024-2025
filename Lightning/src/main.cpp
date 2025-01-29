@@ -81,19 +81,19 @@ void autonomous()
 	
 	EncoderWheelSensorInterface encoderInterface(driveEncoderL,driveEncoderR);
 	DiffDrive drive(leftDriveMotors, rightDriveMotors, &encoderInterface, intertialSensor);
-	drive.setDrivePIDVals(0.75, 0, 1); //0.75
+	drive.setDrivePIDVals(0.75, 0, 1); // 0.75, 0, 1 tuned 1/25/2024
 	drive.setDrivePIDTol(50);
-	drive.setTurnPIDVals(4.25, 0, 0); //4.25
+	drive.setTurnPIDVals(4.25, 0, 0); //4.25, 0, 0 tuned 1/25/2024
 	drive.setTurnPIDTol(2);
 	drive.setMaxDriveSpeed(0.75); 
 	drive.setMaxTurnSpeed(0.8);
 
 	drive.setMaxDriveAccel(0.12);
 
-	drive.turnDegreesAbsolute(180);
-	drive.turnDegreesAbsolute(0);
+	//drive.turnDegreesAbsolute(180);
+	//drive.turnDegreesAbsolute(0);
 
-	//drive.driveTiles(1000);
+	drive.driveTiles(1000);
 	//drive.driveTiles(-1000);
 	
 	
@@ -117,7 +117,15 @@ void autonomous()
 void opcontrol()
 {
 	bool togMOGO = 0;
+	bool togLED = 0;
+	bool togColor = 0; //0 for red, 1 for blu
+	bool seeBlu = false;
+		bool seeRed = false; //test if can see fast
+	double hue, prox;
 	arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	colorSensor.disable_gesture();
+	MasterController.clear();
+	
 	while(true)
 	{	
 		// ********************DRIVE********************
@@ -145,7 +153,7 @@ void opcontrol()
 		
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
 
-
+		//toggle MOGO
 		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
 			if(togMOGO == 1)
 				togMOGO = 0;
@@ -171,12 +179,12 @@ void opcontrol()
 			conveyorMotors.brake();
 		}
 
-		//arm
-		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+		//manual arm
+		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_UP))
 		{
 			arm.move_velocity(600);
 		}
-		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
 		{
 			arm.move_velocity(-600);
 		}
@@ -184,6 +192,74 @@ void opcontrol()
 		{
 			arm.brake();
 		}
+
+		//auto arm
+		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
+		{
+			arm.move_velocity(600);
+			pros::delay(500);
+			arm.brake();
+		}
+		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
+		{
+			arm.move_velocity(-600);
+			pros::delay(500);
+			arm.brake();
+		}
+
+		//toggle LED for sensor
+		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
+			seeBlu = false;
+			seeRed = false;
+			if(togLED)
+				togLED = 0;
+			else
+				togLED = 1;
+			if(togLED)
+				colorSensor.set_led_pwm(100);
+			else
+				colorSensor.set_led_pwm(0);
+		}
+
+		//toggle color we are looking for
+		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
+			if(togColor)
+				togColor = 0;
+			else
+				togColor = 1;
+		}
+
+		//*****color sensing funtions and testing******
+		hue = colorSensor.get_hue();
+		
+		//prox = colorSensor.get_proximity();
+		MasterController.print(0, 0, "%f", hue);
+		hue = colorSensor.get_hue();
+		if((hue > 0 && hue < 10) || (hue > 350 && hue < 360)) {
+			MasterController.print(0, 11, "%s", "R");
+			seeRed = true;
+		}
+		else if(hue > 160 && hue < 190) {
+			MasterController.print(0, 11, "%s", "B");
+			seeBlu = true;
+		}
+
+		if(seeRed)
+			MasterController.print(0, 13, "%s", "SR");
+		if(seeBlu)
+			MasterController.print(0, 16, "%s", "SB");
+		if(togColor)
+			MasterController.print(1, 0, "%s", "Target: Blue");
+		else
+			MasterController.print(1, 0, "%s", "Target: Red");
+
+		
+		MasterController.clear();
+
+
+
+		
+
 
 		//*********************************************
 	}

@@ -4,7 +4,7 @@
 pros::Controller MasterController (pros::E_CONTROLLER_MASTER);
 
 pros::Imu intertialSensor(INERTIAL_SENSOR);
-pros::Vision vision(VISION_SENSOR);
+pros::Optical colorSensor(COLOR_SENSOR);
 pros::ADIEncoder driveEncoderR(ENCODER_TOP_R, ENCODER_BOTTOM_R, false);
 pros::ADIEncoder driveEncoderL(ENCODER_TOP_L, ENCODER_BOTTOM_L, false);
 
