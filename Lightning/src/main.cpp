@@ -137,10 +137,10 @@ void opcontrol()
 		double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
 
 		// Tank
-		// double leftAxisY = MasterController.get_analog(axisLeftY);
-	    // double rightAxisY = MasterController.get_analog(axisRightY);
-		// double leftVelocity = ((leftAxisY) * axisPercentBlue);
-		// double rightVelocity = ((-rightAxisY) * axisPercentBlue);
+		//double leftAxisY = MasterController.get_analog(axisLeftY);
+	    //double rightAxisY = MasterController.get_analog(axisRightY);
+		//double leftVelocity = ((leftAxisY) * axisPercentBlue);
+		//double rightVelocity = ((rightAxisY) * axisPercentBlue);
 
 		
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
