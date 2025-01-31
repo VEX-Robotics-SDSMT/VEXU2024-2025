@@ -130,19 +130,19 @@ void opcontrol()
 	{	
 		// ********************DRIVE********************
 		// 2 stick arcade
-		//double leftAxisY = MasterController.get_analog(axisLeftY);
-		//double rightAxisX = MasterController.get_analog(axisRightX);
-		//double leftVelocity = ((leftAxisY + rightAxisX));
-		//double rightVelocity = ((leftAxisY - rightAxisX));
+		double leftAxisY = MasterController.get_analog(axisLeftY);
+		double rightAxisX = MasterController.get_analog(axisRightX);
+		double leftVelocity = ((leftAxisY + rightAxisX));
+		double rightVelocity = ((leftAxisY - rightAxisX));
 
 		// 1 stick arcade
-		double leftAxisY = MasterController.get_analog(axisLeftY);
-		double leftAxisX = MasterController.get_analog(axisLeftX);
-		double rightAxisX = MasterController.get_analog(axisRightX);
-		double aimVelocityLeft = (rightAxisX) * 0.06;
-		double aimVelocityRight = -rightAxisX * 0.06;
-		double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
-		double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
+		//double leftAxisY = MasterController.get_analog(axisLeftY);
+		//double leftAxisX = MasterController.get_analog(axisLeftX);
+		//double rightAxisX = MasterController.get_analog(axisRightX);
+		//double aimVelocityLeft = (rightAxisX) * 0.06;
+		//double aimVelocityRight = -rightAxisX * 0.06;
+		//double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
+		//double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
 
 		// Tank
 		// double leftAxisY = MasterController.get_analog(axisLeftY);
@@ -180,11 +180,11 @@ void opcontrol()
 		}
 
 		//manual arm
-		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_UP))
+		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 		{
 			arm.move_velocity(600);
 		}
-		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
+		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
 		{
 			arm.move_velocity(-600);
 		}
@@ -235,7 +235,7 @@ void opcontrol()
 		//prox = colorSensor.get_proximity();
 		MasterController.print(0, 0, "%f", hue);
 		hue = colorSensor.get_hue();
-		if((hue > 0 && hue < 10) || (hue > 350 && hue < 360)) {
+		if((hue > 0 && hue < 10) || (hue > 340 && hue < 360)) {
 			MasterController.print(0, 11, "%s", "R");
 			seeRed = true;
 		}
