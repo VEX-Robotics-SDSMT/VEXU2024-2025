@@ -78,26 +78,96 @@ void competition_initialize()
  */
 void autonomous() 
 {
-	
+	//PID Setup
 	EncoderWheelSensorInterface encoderInterface(driveEncoderL,driveEncoderR);
 	DiffDrive drive(leftDriveMotors, rightDriveMotors, &encoderInterface, intertialSensor);
-	drive.setDrivePIDVals(0.75, 0, 1); //0.75
+	drive.setDrivePIDVals(0.75, 0, 1); //0.75 Tuned 2/1/2024
 	drive.setDrivePIDTol(50);
-	drive.setTurnPIDVals(4.25, 0, 0); //4.25
+	drive.setTurnPIDVals(4.25, 0, 0); //4.25 Tuned 2/1/2024
 	drive.setTurnPIDTol(2);
 	drive.setMaxDriveSpeed(0.75); 
 	drive.setMaxTurnSpeed(0.8);
-
 	drive.setMaxDriveAccel(0.12);
 
-	drive.turnDegreesAbsolute(180);
-	drive.turnDegreesAbsolute(0);
+	arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	//Start perpendicular to alliance stake intake facing away
+	drive.setMaxDriveSpeed(0.5);
 
-	//drive.driveTiles(1000);
-	//drive.driveTiles(-1000);
+	//1 bring arm up and drop intake
+	arm.move(127);
+	pros::delay(500);
+	arm.move(-127);
+	intakeMotors.move(127);
+	pros::delay(600);
+	arm.brake();
+
+	//drive forward pick up into arm, spin around 180
+	drive.driveTiles(600);
+	pros::delay(500);
+	intakeMotors.brake();
+	drive.turnDegreesAbsolute(180);
+	pros::delay(200);
+
+	//drive forward a tad bit and lift arm onto wall stake
+	drive.driveTiles(175);
+	arm.move(127);
+	pros::delay(675);
+	arm.brake();
+	pros::delay(200);
+	drive.driveTiles(-400);
+
+	//bring arm back down (mostly) drive to get MOGO on right
+	arm.move(-127);
+	drive.driveTiles(400);
+	arm.brake();
+	drive.turnDegreesAbsolute(250);
+
+	//drive then turn to hit flat side of MOGO
+	drive.setMaxDriveSpeed(0.6);
+	drive.driveTiles(-2400);
+
+	drive.setMaxDriveSpeed(0.4);
+	drive.turnDegreesAbsolute(212); //b/t 210 and 215
+	drive.driveTiles(-1000);
+	mogo.set_value(1);
+	pros::delay(200);
+
+	//turn to grap rings in line
+	drive.setMaxDriveSpeed(0.5);
+	drive.turnDegreesAbsolute(0);
+	arm.move(90);
+	intakeMotors.move(127);
+	drive.driveTiles(3200);
+	arm.brake();
+	pros::delay(500);
+
+	//back up and turn to hit diagoanal to corner
+	drive.driveTiles(-1500);
+	drive.turnDegreesAbsolute(220); //215 off just a bit should be larger
+	drive.driveTiles(2000);
+	drive.turnDegreesAbsolute(135);
+
+	//bring arm back up a bit and drive toward corner
+	arm.move(-90);
+	pros::delay(800);
+	arm.brake();
+	drive.driveTiles(3000);
+	pros::delay(500);
+
+	//ram wall again for consistency
+	drive.driveTiles(-500);
+	drive.driveTiles(500);
+
+	//back up spin and drop MOGO in + corner
+	drive.driveTiles(-800);
+	drive.turnDegreesAbsolute(315);
+	drive.driveTiles(-800);
+	mogo.set_value(0);
+	drive.driveTiles(1000);
+
 	
-	
-	//*/
+
+
 }
 
 /**
@@ -157,18 +227,15 @@ void opcontrol()
 		//intake / conveyor
 		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 		{
-			intake.move(-127);
-			conveyorMotors.moveVelocity(-600);
+			intakeMotors.move(127);
 		}
 		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
 		{
-			intake.move(127);
-			conveyorMotors.moveVelocity(600);
+			intakeMotors.move(-127);
 		}
 		else
 		{
-			intake.brake();
-			conveyorMotors.brake();
+			intakeMotors.brake();
 		}
 
 		//arm

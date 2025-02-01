@@ -20,18 +20,19 @@ pros::Motor leftRear(L_REAR, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor rightFront(R_FRONT, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor rightMid(R_MID, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor rightRear(R_REAR, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor intake(INTAKE, pros::E_MOTOR_GEARSET_18, true);
-pros::Motor convL(CONV_L, pros::E_MOTOR_GEARSET_06, true);
-pros::Motor convR(CONV_R, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor intake(INTAKE, pros::E_MOTOR_GEARSET_18, false);
+pros::Motor convL(CONV_L, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor convR(CONV_R, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor arm(ARM, pros::E_MOTOR_GEARSET_36, true);
 
 std::vector<pros::Motor> leftDriveVector = {leftFront, leftMid, leftRear};
 std::vector<pros::Motor> rightDriveVector = {rightFront, rightMid, rightRear};
 std::vector<pros::Motor> conveyorVector = {convL, convR};
+std::vector<pros::Motor> intakeVector = {intake, convL, convR};
 Mines::MinesMotorGroup leftDriveMotors(leftDriveVector);
 Mines::MinesMotorGroup rightDriveMotors(rightDriveVector);
 Mines::MinesMotorGroup conveyorMotors(conveyorVector);
-
+Mines::MinesMotorGroup intakeMotors(intakeVector); //combines conveyor and intake
 pros::ADIDigitalOut mogo(MOGO);
 
 double axisPercentBlue = 600.0 / 127;

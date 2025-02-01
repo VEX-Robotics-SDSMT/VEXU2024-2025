@@ -53,10 +53,11 @@ extern pros::Motor arm;
 extern std::vector<pros::Motor> leftDriveVector;
 extern std::vector<pros::Motor> rightDriveVector;
 extern std::vector<pros::Motor> conveyorVector;
-extern std::vector<pros::Motor> liftVector;
+extern std::vector<pros::Motor> intakeVector;
 extern Mines::MinesMotorGroup leftDriveMotors;
 extern Mines::MinesMotorGroup rightDriveMotors;
 extern Mines::MinesMotorGroup conveyorMotors;
+extern Mines::MinesMotorGroup intakeMotors;
 
 extern pros::ADIDigitalOut mogo;
 
