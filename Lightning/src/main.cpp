@@ -210,7 +210,11 @@ void opcontrol()
 		//double leftAxisY = MasterController.get_analog(axisLeftY);
 	    //double rightAxisY = MasterController.get_analog(axisRightY);
 		//double leftVelocity = ((leftAxisY) * axisPercentBlue);
+<<<<<<< Updated upstream
 		//double rightVelocity = ((rightAxisY) * axisPercentBlue);
+=======
+		//double rightVelocity = ((-rightAxisY) * axisPercentBlue);
+>>>>>>> Stashed changes
 
 		
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
