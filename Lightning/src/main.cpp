@@ -89,6 +89,7 @@ void autonomous()
 	drive.setMaxTurnSpeed(0.8);
 	drive.setMaxDriveAccel(0.12);
 
+	
 	arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	//Start perpendicular to alliance stake intake facing away
 	drive.setMaxDriveSpeed(0.5);
@@ -127,7 +128,7 @@ void autonomous()
 	drive.driveTiles(-2400);
 
 	drive.setMaxDriveSpeed(0.4);
-	drive.turnDegreesAbsolute(212); //b/t 210 and 215
+	drive.turnDegreesAbsolute(212); //b/t 210 and 214
 	drive.driveTiles(-1000);
 	mogo.set_value(1);
 	pros::delay(200);
@@ -143,7 +144,7 @@ void autonomous()
 
 	//back up and turn to hit diagoanal to corner
 	drive.driveTiles(-1500);
-	drive.turnDegreesAbsolute(220); //215 off just a bit should be larger
+	drive.turnDegreesAbsolute(220);
 	drive.driveTiles(2000);
 	drive.turnDegreesAbsolute(135);
 
@@ -160,11 +161,36 @@ void autonomous()
 
 	//back up spin and drop MOGO in + corner
 	drive.driveTiles(-800);
+	intakeMotors.brake();
 	drive.turnDegreesAbsolute(315);
 	drive.driveTiles(-800);
 	mogo.set_value(0);
 	drive.driveTiles(1000);
 
+	//turn drive and get second MOGO
+	drive.turnDegreesAbsolute(0);
+	drive.driveTiles(4000);
+	drive.turnDegreesAbsolute(90);
+	drive.setMaxDriveSpeed(0.4);
+	drive.driveTiles(-1200);
+	mogo.set_value(1);
+
+	//drive forward and turn toward corner and push twice
+	drive.driveTiles(200);
+	intakeMotors.move(127);
+	drive.turnDegreesAbsolute(45);
+	drive.driveTiles(2500);
+	//liftintake
+	drive.driveTiles(-700);
+	drive.driveTiles(1000, 1000); //with timeout in case doesn't get there
+
+	//place mogo in corner
+	drive.driveTiles(-700);
+	drive.turnDegreesAbsolute(225);
+	drive.driveTiles(-700);
+	mogo.set_value(0);
+	
+	//*/
 	
 
 
@@ -210,11 +236,7 @@ void opcontrol()
 		//double leftAxisY = MasterController.get_analog(axisLeftY);
 	    //double rightAxisY = MasterController.get_analog(axisRightY);
 		//double leftVelocity = ((leftAxisY) * axisPercentBlue);
-<<<<<<< Updated upstream
 		//double rightVelocity = ((rightAxisY) * axisPercentBlue);
-=======
-		//double rightVelocity = ((-rightAxisY) * axisPercentBlue);
->>>>>>> Stashed changes
 
 		
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
