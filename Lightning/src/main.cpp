@@ -110,85 +110,93 @@ void autonomous()
 	pros::delay(200);
 
 	//drive forward a tad bit and lift arm onto wall stake
-	drive.driveTiles(175);
+	drive.driveTiles(175); //tune this a bit more
 	arm.move(127);
-	pros::delay(675);
+	pros::delay(700);
 	arm.brake();
 	pros::delay(200);
 	drive.driveTiles(-400);
 
-	//bring arm back down (mostly) drive to get MOGO on right
+	//bring arm back down drive to get MOGO on right
 	arm.move(-127);
 	drive.driveTiles(400);
 	arm.brake();
-	drive.turnDegreesAbsolute(250);
+	drive.turnDegreesAbsolute(250);	//check angle
 
 	//drive then turn to hit flat side of MOGO
 	drive.setMaxDriveSpeed(0.6);
-	drive.driveTiles(-2400);
+	drive.driveTiles(-2300);	//2400
 
 	drive.setMaxDriveSpeed(0.4);
 	drive.turnDegreesAbsolute(212); //b/t 210 and 214
 	drive.driveTiles(-1000);
 	mogo.set_value(1);
-	pros::delay(200);
 
 	//turn to grap rings in line
 	drive.setMaxDriveSpeed(0.5);
-	drive.turnDegreesAbsolute(0);
-	arm.move(90);
 	intakeMotors.move(127);
-	drive.driveTiles(3200);
+	pros::delay(200);
+	arm.move(90);
+	drive.turnDegreesAbsolute(0);
 	arm.brake();
+	drive.driveTiles(3200);
 	pros::delay(500);
 
 	//back up and turn to hit diagoanal to corner
+	drive.setMaxDriveSpeed(0.7);
 	drive.driveTiles(-1500);
 	drive.turnDegreesAbsolute(220);
-	drive.driveTiles(2000);
+	drive.driveTiles(2200); 	//was 2000
 	drive.turnDegreesAbsolute(135);
 
 	//bring arm back up a bit and drive toward corner
+	drive.setMaxDriveSpeed(0.5);
 	arm.move(-90);
-	pros::delay(800);
+	pros::delay(500);
 	arm.brake();
-	drive.driveTiles(3000);
+	drive.driveTiles(3500, 2000);		//two second timeout
 	pros::delay(500);
 
 	//ram wall again for consistency
-	drive.driveTiles(-500);
-	drive.driveTiles(500);
+	drive.driveTiles(-1000);
+	drive.driveTiles(1000, 1000);
 
 	//back up spin and drop MOGO in + corner
 	drive.driveTiles(-800);
-	intakeMotors.brake();
 	drive.turnDegreesAbsolute(315);
+	intakeMotors.move(-127);
 	drive.driveTiles(-800);
 	mogo.set_value(0);
-	drive.driveTiles(1000);
+	drive.driveTiles(800);
 
-	//turn drive and get second MOGO
+	//turn drive downfield
+	drive.setMaxDriveSpeed(0.7);
 	drive.turnDegreesAbsolute(0);
-	drive.driveTiles(4000);
+	intakeMotors.brake();
+	drive.driveTiles(4200);
+
+	//turn to back into second MOGO
 	drive.turnDegreesAbsolute(90);
 	drive.setMaxDriveSpeed(0.4);
 	drive.driveTiles(-1200);
 	mogo.set_value(1);
-
+	
 	//drive forward and turn toward corner and push twice
+	drive.setMaxDriveSpeed(0.5);
 	drive.driveTiles(200);
 	intakeMotors.move(127);
 	drive.turnDegreesAbsolute(45);
-	drive.driveTiles(2500);
+	drive.driveTiles(3000);
 	//liftintake
 	drive.driveTiles(-700);
-	drive.driveTiles(1000, 1000); //with timeout in case doesn't get there
+	drive.driveTiles(2000, 1000); //with timeout in case doesn't get there
 
 	//place mogo in corner
-	drive.driveTiles(-700);
+	drive.driveTiles(-1500);
 	drive.turnDegreesAbsolute(225);
-	drive.driveTiles(-700);
+	drive.driveTiles(-1500);
 	mogo.set_value(0);
+	drive.driveTiles(1000);
 	
 	//*/
 	
