@@ -7,7 +7,7 @@
 
 #define INERTIAL_SENSOR 2
 #define VISION_SENSOR 4
-#define VEX_GPS 5
+#define VEX_GPS 21
 #define ENCODER_TOP_R 2
 #define ENCODER_BOTTOM_R 1
 #define ENCODER_TOP_L 6

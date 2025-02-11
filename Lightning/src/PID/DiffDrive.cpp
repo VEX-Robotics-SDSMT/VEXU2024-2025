@@ -351,6 +351,8 @@ double EncoderWheelSensorInterface::Get()
     double sensorValL = encoderL.get_value();
     double sensorValR = encoderR.get_value();
     //std::cout << "encoder val: " << sensorVal <<"errno:" <<errno <<  "\n";
+
+    /* edit the following line if wheel encoders are off*/
     double avg = -(sensorValL - sensorValR) / 2;
     return avg;
 }

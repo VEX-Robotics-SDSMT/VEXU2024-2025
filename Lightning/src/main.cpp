@@ -94,6 +94,7 @@ void autonomous()
 	//Start perpendicular to alliance stake intake facing away
 	drive.setMaxDriveSpeed(0.5);
 
+	
 	//1 bring arm up and drop intake
 	arm.move(127);
 	pros::delay(500);
@@ -226,25 +227,25 @@ void opcontrol()
 	{	
 		// ********************DRIVE********************
 		// 2 stick arcade
-		//double leftAxisY = MasterController.get_analog(axisLeftY);
-		//double rightAxisX = MasterController.get_analog(axisRightX);
-		//double leftVelocity = ((leftAxisY + rightAxisX));
-		//double rightVelocity = ((leftAxisY - rightAxisX));
+		// double leftAxisY = MasterController.get_analog(axisLeftY);
+		// double rightAxisX = MasterController.get_analog(axisRightX);
+		// double leftVelocity = ((leftAxisY + rightAxisX));
+		// double rightVelocity = ((leftAxisY - rightAxisX));
 
 		// 1 stick arcade
-		double leftAxisY = MasterController.get_analog(axisLeftY);
-		double leftAxisX = MasterController.get_analog(axisLeftX);
-		double rightAxisX = MasterController.get_analog(axisRightX);
-		double aimVelocityLeft = (rightAxisX) * 0.06;
-		double aimVelocityRight = -rightAxisX * 0.06;
-		double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
-		double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
+		// double leftAxisY = MasterController.get_analog(axisLeftY);
+		// double leftAxisX = MasterController.get_analog(axisLeftX);
+		// double rightAxisX = MasterController.get_analog(axisRightX);
+		// double aimVelocityLeft = (rightAxisX) * 0.06;
+		// double aimVelocityRight = -rightAxisX * 0.06;
+		// double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
+		// double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
 
 		// Tank
-		//double leftAxisY = MasterController.get_analog(axisLeftY);
-	    //double rightAxisY = MasterController.get_analog(axisRightY);
-		//double leftVelocity = ((leftAxisY) * axisPercentBlue);
-		//double rightVelocity = ((rightAxisY) * axisPercentBlue);
+		double leftAxisY = MasterController.get_analog(axisLeftY);
+	    double rightAxisY = MasterController.get_analog(axisRightY);
+		double leftVelocity = ((leftAxisY) * axisPercentBlue);
+		double rightVelocity = ((rightAxisY) * axisPercentBlue);
 
 		
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
