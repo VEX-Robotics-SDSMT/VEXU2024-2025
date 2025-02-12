@@ -233,19 +233,19 @@ void opcontrol()
 		// double rightVelocity = ((leftAxisY - rightAxisX));
 
 		// 1 stick arcade
-		// double leftAxisY = MasterController.get_analog(axisLeftY);
-		// double leftAxisX = MasterController.get_analog(axisLeftX);
-		// double rightAxisX = MasterController.get_analog(axisRightX);
-		// double aimVelocityLeft = (rightAxisX) * 0.06;
-		// double aimVelocityRight = -rightAxisX * 0.06;
-		// double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
-		// double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
+		double leftAxisY = MasterController.get_analog(axisLeftY);
+		double leftAxisX = MasterController.get_analog(axisLeftX);
+		double rightAxisX = MasterController.get_analog(axisRightX);
+		double aimVelocityLeft = (rightAxisX) * 0.06;
+		double aimVelocityRight = -rightAxisX * 0.06;
+		double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
+		double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
 
 		// Tank
-		double leftAxisY = MasterController.get_analog(axisLeftY);
-	    double rightAxisY = MasterController.get_analog(axisRightY);
-		double leftVelocity = ((leftAxisY) * axisPercentBlue);
-		double rightVelocity = ((rightAxisY) * axisPercentBlue);
+		// double leftAxisY = MasterController.get_analog(axisLeftY);
+	    // double rightAxisY = MasterController.get_analog(axisRightY);
+		// double leftVelocity = ((leftAxisY) * axisPercentBlue);
+		// double rightVelocity = ((rightAxisY) * axisPercentBlue);
 
 		
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
