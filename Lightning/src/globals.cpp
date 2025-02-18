@@ -50,4 +50,4 @@ int requiredColorLoops = 3;
 const double ROLLER_TIMEOUT = 3000;
 
 bool skills = false;
-bool red = true;
+bool red_team = false;

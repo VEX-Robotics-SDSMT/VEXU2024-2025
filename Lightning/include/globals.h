@@ -72,6 +72,7 @@ extern int greenGearbox;
 extern int redGearbox;
 
 extern bool skills;
+extern bool red_team;
 
 extern uint8_t RED_GOAL_SIG_ID;
 extern uint8_t BLUE_GOAL_SIG_ID;

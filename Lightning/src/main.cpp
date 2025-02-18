@@ -203,7 +203,7 @@ void autonomous()
 	
 		//*/
 	}
-	else if (red) {
+	else if (red_team) {
 		//RED MATCH AUTO (30 sec)
 
 		//rush forward toward MOGO on right
@@ -281,6 +281,76 @@ void autonomous()
 	}
 	else {
 		//BLUE MATCH AUTO (30 sec)
+
+		//rush forward toward MOGO on right
+		drive.setMaxDriveAccel(0.6);
+		drive.setMaxDriveSpeed(0.8);
+		
+		drive.driveTiles(-3300);
+		drive.setMaxDriveAccel(0.2);
+		drive.setMaxDriveSpeed(0.4);
+		drive.driveTiles(-100);
+		mogo.set_value(1);
+		drive.setMaxDriveSpeed(0.7);
+		drive.driveTiles(1000);
+
+		//in case of bad grip
+		mogo.set_value(0);
+		drive.setMaxDriveSpeed(0.4);
+		drive.driveTiles(-600); //400
+		mogo.set_value(1);
+
+		
+		//drive toward alliance stake
+		drive.setMaxDriveSpeed(0.7);
+		drive.setMaxDriveAccel(0.5);
+		drive.driveTiles(2200);
+		drive.turnDegreesAbsolute(-10);
+		
+		// bring arm into position
+		arm.move(127);
+		pros::delay(500);
+		arm.move(-127);
+		pros::delay(700);
+		arm.brake();
+		intakeMotors.move(127);
+		pros::delay(700);
+		intakeMotors.brake();
+
+		//put preload on alliance stake
+		intake.move(127);
+		drive.driveTiles(1100);
+		arm.move(127);
+		pros::delay(770);
+		arm.move(-100);
+		pros::delay(100);
+		arm.brake();
+		drive.driveTiles(-900);
+		arm.move(-127);
+		pros::delay(300);
+		arm.brake();
+		drive.turnDegreesAbsolute(117);
+
+		//drive and pick up one
+		intakeMotors.move(127);
+		drive.setMaxDriveSpeed(0.4);
+		drive.driveTiles(1700);
+		intake.move(-127); //run intake in reverse to prevent picking up red ring
+		drive.driveTiles(-400);
+
+		//turn towards corner and clear it out
+		drive.turnDegreesAbsolute(74);
+		intakeMotors.move(127);
+		drive.driveTiles(1100);
+		//lower wing
+		drive.turnDegreesAbsolute(251);
+		intakeMotors.brake();
+
+		//go touch bar for WP
+		//lift wing
+		drive.setMaxDriveSpeed(0.7);
+		drive.driveTiles(3200, 2500);
+		//*/
 	}
 }
 
@@ -312,19 +382,19 @@ void opcontrol()
 		// double rightVelocity = ((leftAxisY - rightAxisX));
 
 		// 1 stick arcade
-		double leftAxisY = MasterController.get_analog(axisLeftY);
-		double leftAxisX = MasterController.get_analog(axisLeftX);
-		double rightAxisX = MasterController.get_analog(axisRightX);
-		double aimVelocityLeft = (rightAxisX) * 0.06;
-		double aimVelocityRight = -rightAxisX * 0.06;
-		double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
-		double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
+		// double leftAxisY = MasterController.get_analog(axisLeftY);
+		// double leftAxisX = MasterController.get_analog(axisLeftX);
+		// double rightAxisX = MasterController.get_analog(axisRightX);
+		// double aimVelocityLeft = (rightAxisX) * 0.06;
+		// double aimVelocityRight = -rightAxisX * 0.06;
+		// double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
+		// double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
 
 		// Tank
-		// double leftAxisY = MasterController.get_analog(axisLeftY);
-	    // double rightAxisY = MasterController.get_analog(axisRightY);
-		// double leftVelocity = ((leftAxisY) * axisPercentBlue);
-		// double rightVelocity = ((rightAxisY) * axisPercentBlue);
+		double leftAxisY = MasterController.get_analog(axisLeftY);
+	    double rightAxisY = MasterController.get_analog(axisRightY);
+		double leftVelocity = ((leftAxisY) * axisPercentBlue);
+		double rightVelocity = ((rightAxisY) * axisPercentBlue);
 
 		
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
