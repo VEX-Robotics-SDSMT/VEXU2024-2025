@@ -8,10 +8,10 @@
 #define INERTIAL_SENSOR 2
 #define VISION_SENSOR 4
 #define VEX_GPS 21
-#define ENCODER_TOP_R 2
-#define ENCODER_BOTTOM_R 1
-#define ENCODER_TOP_L 6
-#define ENCODER_BOTTOM_L 5
+#define ENCODER_TOP_R 1
+#define ENCODER_BOTTOM_R 2
+#define ENCODER_TOP_L 3
+#define ENCODER_BOTTOM_L 4
 
 #define L_FRONT 13
 #define L_MID 14
