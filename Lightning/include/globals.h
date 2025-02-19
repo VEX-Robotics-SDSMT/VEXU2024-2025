@@ -25,6 +25,7 @@
 #define ARM 17
 
 #define MOGO 8
+#define WING 7
 
 
 #define INTAKE_MOTOR_GEARSET redGearbox
@@ -60,6 +61,7 @@ extern Mines::MinesMotorGroup conveyorMotors;
 extern Mines::MinesMotorGroup intakeMotors;
 
 extern pros::ADIDigitalOut mogo;
+extern pros::ADIDigitalOut wing;
 
 enum Color { red, blue, purple };
 extern pros::Motor string;

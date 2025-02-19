@@ -258,7 +258,7 @@ void autonomous()
 		//drive and pick up one
 		intakeMotors.move(127);
 		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(1800);
+		drive.driveTiles(1700);
 		intake.move(-127); //run intake in reverse to prevent picking up blue ring
 		drive.driveTiles(-500);
 
@@ -266,14 +266,24 @@ void autonomous()
 		drive.turnDegreesAbsolute(-70);
 		intakeMotors.move(127);
 		drive.driveTiles(400);
-		//lower wing
-		drive.turnDegreesAbsolute(111);
 		intakeMotors.brake();
+		//clear twice
+		wing.set_value(1);
+		drive.turnDegreesAbsolute(109);
+		wing.set_value(0);
+		drive.turnDegreesAbsolute(-70);
+		drive.driveTiles(400);
+		wing.set_value(1);
+		drive.turnDegreesAbsolute(109);
+		wing.set_value(0);
+
+		//back and drop mogo in corner
+		drive.driveTiles(-1200, 1000);
+		mogo.set_value(0);
 
 		//go touch bar for WP
-		//lift wing
 		drive.setMaxDriveSpeed(0.7);
-		drive.driveTiles(3200, 2500);
+		drive.driveTiles(3600, 2500);
 		
 
 
@@ -342,12 +352,12 @@ void autonomous()
 		drive.turnDegreesAbsolute(74);
 		intakeMotors.move(127);
 		drive.driveTiles(1100);
-		//lower wing
+		wing.set_value(1);
 		drive.turnDegreesAbsolute(251);
 		intakeMotors.brake();
 
 		//go touch bar for WP
-		//lift wing
+		wing.set_value(0);
 		drive.setMaxDriveSpeed(0.7);
 		drive.driveTiles(3200, 2500);
 		//*/
@@ -371,6 +381,7 @@ void autonomous()
 void opcontrol()
 {
 	bool togMOGO = 0;
+	bool togWING = 0;
 	arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	while(true)
 	{	
@@ -382,30 +393,39 @@ void opcontrol()
 		// double rightVelocity = ((leftAxisY - rightAxisX));
 
 		// 1 stick arcade
-		// double leftAxisY = MasterController.get_analog(axisLeftY);
-		// double leftAxisX = MasterController.get_analog(axisLeftX);
-		// double rightAxisX = MasterController.get_analog(axisRightX);
-		// double aimVelocityLeft = (rightAxisX) * 0.06;
-		// double aimVelocityRight = -rightAxisX * 0.06;
-		// double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
-		// double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
+		double leftAxisY = MasterController.get_analog(axisLeftY);
+		double leftAxisX = MasterController.get_analog(axisLeftX);
+		double rightAxisX = MasterController.get_analog(axisRightX);
+		double aimVelocityLeft = (rightAxisX) * 0.06;
+		double aimVelocityRight = -rightAxisX * 0.06;
+		double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
+		double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
 
 		// Tank
-		double leftAxisY = MasterController.get_analog(axisLeftY);
-	    double rightAxisY = MasterController.get_analog(axisRightY);
-		double leftVelocity = ((leftAxisY) * axisPercentBlue);
-		double rightVelocity = ((rightAxisY) * axisPercentBlue);
+		// double leftAxisY = MasterController.get_analog(axisLeftY);
+	    // double rightAxisY = MasterController.get_analog(axisRightY);
+		// double leftVelocity = ((leftAxisY) * axisPercentBlue);
+		// double rightVelocity = ((rightAxisY) * axisPercentBlue);
 
 		
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
 
-
+		//MOGO
 		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
 			if(togMOGO == 1)
 				togMOGO = 0;
 			else
 				togMOGO = 1;
 			mogo.set_value(togMOGO);
+		}
+
+		//WING
+		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
+			if(togWING == 1)
+				togWING = 0;
+			else
+				togWING = 1;
+			wing.set_value(togWING);
 		}
 		
 		//intake / conveyor
