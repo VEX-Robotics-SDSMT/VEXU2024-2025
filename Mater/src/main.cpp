@@ -78,9 +78,98 @@ void competition_initialize()
  */
 void autonomous() 
 {
-	
 	EncoderWheelSensorInterface encoderInterface(tracking);
 	DiffDrive drive(leftDriveMotors, rightDriveMotors, &encoderInterface, intertialSensor);
+	drive.setDrivePIDVals(0.9, 0, 1); //0.9, 0, 1 tuned 2/19/24
+	drive.setDrivePIDTol(50);
+	drive.setTurnPIDVals(4, 0, 0); //4, 0, 0 tuned 2/19/24
+	drive.setTurnPIDTol(2);
+	drive.setMaxDriveSpeed(0.8); 
+	drive.setMaxTurnSpeed(0.8);
+
+	drive.setMaxDriveAccel(0.12);
+
+	//drive.turnDegreesAbsolute(180);
+	//drive.turnDegreesAbsolute(0);
+
+	//get MOGO
+	drive.setMaxDriveAccel(0.5);
+	drive.driveTiles(-2450);
+	drive.setMaxDriveSpeed(0.2);
+	drive.driveTiles(-100);
+	mogo.set_value(1);
+
+	//turn to first stack pick up one
+	//intakeMotors.move(127);
+	drive.setMaxDriveSpeed(0.6);
+	drive.driveTiles(700);
+
+	//regrip in case
+	mogo.set_value(0);
+	drive.setMaxDriveSpeed(0.2);
+	drive.driveTiles(-200);
+	mogo.set_value(1);
+
+	drive.setMaxDriveSpeed(0.6);
+	drive.driveTiles(500);
+
+	//dump one
+	arm.move(-127);
+	pros::delay(700);
+	arm.move(127);
+	pros::delay(800);
+	arm.brake();
+
+	//drop MOGO and grab second
+	mogo.set_value(0);
+	drive.driveTiles(900);
+	drive.turnDegreesAbsolute(120);
+	drive.setMaxDriveSpeed(0.3);
+	drive.driveTiles(-500);
+	mogo.set_value(1);
+
+	//drive to get next stack
+	drive.setMaxDriveSpeed(0.6);
+	intakeMotors.move(127);
+	drive.driveTiles(1600);
+	drive.driveTiles(200);
+	pros::delay(1200);
+
+	//dump one
+	arm.move(-127);
+	pros::delay(700);
+	arm.move(127);
+	pros::delay(800);
+	arm.brake();
+
+	drive.driveTiles(-2700);
+	drive.turnDegreesAbsolute(80);
+
+	//pick up knocked from LIGHTNING
+	drive.driveTiles(600);
+	drive.driveTiles(200);
+	pros::delay(700);
+
+	//dump one
+	arm.move(-127);
+	pros::delay(700);
+	arm.move(127);
+	pros::delay(800);
+	arm.brake();
+
+	//drop MOGO and get to the bar
+	drive.driveTiles(-600);
+	mogo.set_value(0);
+	drive.turnDegreesAbsolute(-15);
+	drive.setMaxDriveAccel(0.5);
+	drive.driveTiles(-1500);
+	drive.turnDegreesAbsolute(90);
+	lift.set_value(1);
+	drive.driveTiles(-1000, 1000);
+
+	drive.killPIDs();
+
+	
 }
 
 /**
@@ -106,8 +195,8 @@ void opcontrol()
 	bool seeBlu = false;
 		bool seeRed = false; //test if can see fast
 	double hue, prox;
-	arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	MasterController.clear();
+	//arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	//MasterController.clear();
 	
 	while(true)
 	{	

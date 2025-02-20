@@ -25,8 +25,7 @@ class SensorInterface
 
 class EncoderWheelSensorInterface : public SensorInterface
 {
-    pros::ADIEncoder encoderL;
-    pros::ADIEncoder encoderR;
+    pros::ADIEncoder encoder;
 
     public:
         EncoderWheelSensorInterface(pros::ADIEncoder encoderL);
