@@ -176,7 +176,7 @@ void autonomous()
 	{
 		//get MOGO
 		drive.setMaxDriveAccel(0.5);
-		drive.driveTiles(-2450);
+		drive.driveTiles(-2400);
 		drive.setMaxDriveSpeed(0.2);
 		drive.driveTiles(-100);
 		mogo.set_value(1);
@@ -204,7 +204,7 @@ void autonomous()
 
 		//drop MOGO and grab second
 		mogo.set_value(0);
-		drive.driveTiles(900);
+		drive.driveTiles(900); //900
 		drive.turnDegreesAbsolute(240);
 		drive.setMaxDriveSpeed(0.3);
 		drive.driveTiles(-500);
@@ -213,10 +213,10 @@ void autonomous()
 		//drive to get next stack
 		drive.setMaxDriveSpeed(0.6);
 		intakeMotors.move(127);
-		drive.driveTiles(1600);
+		drive.driveTiles(1650);
 		drive.driveTiles(200);
 		//pros::delay(1200);
-		drive.driveTiles(-2700); // might need to remove this
+		drive.driveTiles(-2250); // might need to remove this
 
 		//dump one
 		arm.move(-127);
@@ -226,11 +226,11 @@ void autonomous()
 		arm.brake();
 
 		//drive.driveTiles(-2700);
-		drive.turnDegreesAbsolute(280);
+		drive.turnDegreesAbsolute(320);
 
 		//pick up knocked from LIGHTNING
-		drive.driveTiles(600);
-		drive.driveTiles(200);
+		drive.driveTiles(400);
+		drive.driveTiles(200, 1000);
 		pros::delay(700);
 
 		//dump one
@@ -241,12 +241,12 @@ void autonomous()
 		arm.brake();
 
 		//drop MOGO and get to the bar
-		drive.driveTiles(-600);
-		mogo.set_value(0);
+		drive.driveTiles(-500);
+		//mogo.set_value(0);
 		drive.turnDegreesAbsolute(15);
 		drive.setMaxDriveAccel(0.5);
-		drive.driveTiles(-1900);
-		drive.turnDegreesAbsolute(200);
+		drive.driveTiles(-1600);
+		drive.turnDegreesAbsolute(300);
 		lift.set_value(1);
 		drive.driveTiles(-1000, 1000);
 
