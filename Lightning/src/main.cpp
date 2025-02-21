@@ -257,29 +257,27 @@ void autonomous()
 		
 		//drive and pick up one
 		intakeMotors.move(127);
-		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(1700);
+		conveyorMotors.move(100);
+		drive.setMaxDriveSpeed(0.3);
+		drive.driveTiles(1650);
 		intake.move(-127); //run intake in reverse to prevent picking up blue ring
 		drive.driveTiles(-500);
 
 		//turn towards corner and clear it out
 		drive.turnDegreesAbsolute(-70);
 		intakeMotors.move(127);
-		drive.driveTiles(400);
+		drive.driveTiles(700);
 		intakeMotors.brake();
 		//clear twice
 		wing.set_value(1);
+		drive.turnDegreesAbsolute(0);
+		wing.set_value(0);		
 		drive.turnDegreesAbsolute(109);
-		wing.set_value(0);
-		drive.turnDegreesAbsolute(-70);
 		drive.driveTiles(400);
-		wing.set_value(1);
-		drive.turnDegreesAbsolute(109);
-		wing.set_value(0);
 
 		//back and drop mogo in corner
-		drive.driveTiles(-1200, 1000);
 		mogo.set_value(0);
+		drive.driveTiles(-1200, 800);
 
 		//go touch bar for WP
 		drive.setMaxDriveSpeed(0.7);
@@ -315,7 +313,7 @@ void autonomous()
 		drive.setMaxDriveSpeed(0.7);
 		drive.setMaxDriveAccel(0.5);
 		drive.driveTiles(2200);
-		drive.turnDegreesAbsolute(-10);
+		drive.turnDegreesAbsolute(-8);
 		
 		// bring arm into position
 		arm.move(127);
@@ -336,30 +334,35 @@ void autonomous()
 		pros::delay(100);
 		arm.brake();
 		drive.driveTiles(-900);
+		
+		drive.turnDegreesAbsolute(117);
 		arm.move(-127);
 		pros::delay(300);
 		arm.brake();
-		drive.turnDegreesAbsolute(117);
 
 		//drive and pick up one
 		intakeMotors.move(127);
 		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(1700);
-		intake.move(-127); //run intake in reverse to prevent picking up red ring
-		drive.driveTiles(-400);
+		drive.driveTiles(1750);
+		pros::delay(1000);
+		drive.driveTiles(-450);
 
 		//turn towards corner and clear it out
 		drive.turnDegreesAbsolute(74);
-		intakeMotors.move(127);
-		drive.driveTiles(1100);
+		intakeMotors.brake();
 		wing.set_value(1);
+		drive.driveTiles(1100);
 		drive.turnDegreesAbsolute(251);
 		intakeMotors.brake();
 
 		//go touch bar for WP
 		wing.set_value(0);
+		drive.driveTiles(300);
+		drive.driveTiles(-800);
+		mogo.set_value(0);
+		drive.driveTiles(-500, 1000);
 		drive.setMaxDriveSpeed(0.7);
-		drive.driveTiles(3200, 2500);
+		drive.driveTiles(3700, 2200);
 		//*/
 	}
 }
