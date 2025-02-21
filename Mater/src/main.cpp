@@ -112,7 +112,7 @@ void autonomous()
 	drive.driveTiles(-200);
 	mogo.set_value(1);
 
-	drive.setMaxDriveSpeed(0.6);
+	drive.setMaxDriveSpeed(0.7);
 	drive.driveTiles(500);
 
 	//dump one
@@ -166,7 +166,7 @@ void autonomous()
 	drive.turnDegreesAbsolute(-15);
 	drive.setMaxDriveAccel(0.5);
 	drive.driveTiles(-1700);
-	drive.turnDegreesAbsolute(90);
+	drive.turnDegreesAbsolute(60);
 	lift.set_value(1);
 	drive.driveTiles(-1000, 1000);
 
@@ -183,7 +183,7 @@ void autonomous()
 
 		//turn to first stack pick up one
 		//intakeMotors.move(127);
-		drive.setMaxDriveSpeed(0.6);
+		drive.setMaxDriveSpeed(0.7);
 		drive.driveTiles(700);
 
 		//regrip in case
@@ -245,8 +245,8 @@ void autonomous()
 		mogo.set_value(0);
 		drive.turnDegreesAbsolute(15);
 		drive.setMaxDriveAccel(0.5);
-		drive.driveTiles(-1700);
-		drive.turnDegreesAbsolute(270);
+		drive.driveTiles(-1900);
+		drive.turnDegreesAbsolute(200);
 		lift.set_value(1);
 		drive.driveTiles(-1000, 1000);
 
