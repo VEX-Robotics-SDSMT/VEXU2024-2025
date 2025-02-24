@@ -92,7 +92,78 @@ void autonomous()
 	//drive.turnDegreesAbsolute(180);
 	//drive.turnDegreesAbsolute(0);
 
-	if(red)
+	if(skills) {
+		//grab one and spin to get mogo
+		intakeMotors.move(127);
+		drive.driveTiles(500);
+		drive.driveTiles(200);
+		drive.turnDegreesAbsolute(180);
+		drive.driveTiles(-500);
+		mogo.set_value(1);
+
+		drive.turnDegreesAbsolute(90);
+		//dump one
+		arm.move(-127);
+		pros::delay(700);
+		arm.move(127);
+		pros::delay(800);
+		arm.brake();
+
+		drive.driveTiles(800);
+		drive.driveTiles(200);
+
+		//dump one
+		arm.move(-127);
+		pros::delay(700);
+		arm.move(127);
+		pros::delay(800);
+		arm.brake();
+
+		//place in corner
+		drive.turnDegreesAbsolute(45);
+		drive.driveTiles(-2500, 3000);
+		mogo.set_value(0);
+		drive.driveTiles(-200, 800);
+		
+		//go back forward
+		drive.driveTiles(1000);
+		drive.turnDegreesAbsolute(0);
+		drive.driveTiles(3000);
+		drive.driveTiles(500);
+		drive.turnDegreesAbsolute(-135);
+
+		//get second MOGO
+		drive.driveTiles(-1000);
+		mogo.set_value(1);
+
+		//dump one
+		arm.move(-127);
+		pros::delay(700);
+		arm.move(127);
+		pros::delay(800);
+		arm.brake();
+
+		drive.turnDegreesAbsolute(-45);
+		drive.driveTiles(2000);
+		pros::delay(1000);
+
+		//dump one
+		arm.move(-127);
+		pros::delay(700);
+		arm.move(127);
+		pros::delay(800);
+		arm.brake();
+
+		//place in corner
+		drive.turnDegreesAbsolute(135);
+		drive.driveTiles(-1000);
+		mogo.set_value(0);
+		drive.driveTiles(-1500, 1000);
+
+		//*/
+	}
+
+	else if(red)
 	{
 		//get MOGO
 	drive.setMaxDriveAccel(0.5);
@@ -167,13 +238,15 @@ void autonomous()
 	drive.setMaxDriveAccel(0.5);
 	drive.driveTiles(-1700);
 	drive.turnDegreesAbsolute(60);
-	lift.set_value(1);
+	arm.move(-127);
+	pros::delay(300);
 	drive.driveTiles(-1000, 1000);
 
 	drive.killPIDs();
 	}
-	else
+	else //BLUE ROUTE
 	{
+		
 		//get MOGO
 		drive.setMaxDriveAccel(0.5);
 		drive.driveTiles(-2400);
@@ -247,10 +320,12 @@ void autonomous()
 		drive.setMaxDriveAccel(0.5);
 		drive.driveTiles(-1600);
 		drive.turnDegreesAbsolute(300);
-		lift.set_value(1);
+		arm.move(-127);
+		pros::delay(300);
 		drive.driveTiles(-1000, 1000);
 
 		drive.killPIDs();
+		//*/
 	}	
 }
 

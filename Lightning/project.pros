@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Lightning_SB",
+    "project_name": "Lightning_Blue",
     "target": "v5",
     "templates": {
       "kernel": {

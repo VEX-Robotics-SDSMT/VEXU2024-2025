@@ -49,7 +49,9 @@ void initialize()
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled() {
+	arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -80,6 +82,7 @@ void autonomous()
 {
 	//PID Setup
 	EncoderWheelSensorInterface encoderInterface(driveEncoderL,driveEncoderR);
+	//EncoderWheelSensorInterface encoderInterface(driveEncoderR);
 	DiffDrive drive(leftDriveMotors, rightDriveMotors, &encoderInterface, intertialSensor);
 	drive.setDrivePIDVals(0.75, 0, 1); //0.75 Tuned 2/1/2024
 	drive.setDrivePIDTol(50);
@@ -281,7 +284,10 @@ void autonomous()
 
 		//go touch bar for WP
 		drive.setMaxDriveSpeed(0.7);
-		drive.driveTiles(3600, 2500);
+		drive.driveTiles(3200, 2000);
+		drive.killPIDs();
+		arm.move(127);
+		pros::delay(200);
 		
 
 
@@ -297,10 +303,10 @@ void autonomous()
 		drive.driveTiles(-3300);
 		drive.setMaxDriveAccel(0.2);
 		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(-100);
+		drive.driveTiles(-150);
 		mogo.set_value(1);
 		drive.setMaxDriveSpeed(0.7);
-		drive.driveTiles(1000);
+		drive.driveTiles(890);
 
 		//in case of bad grip
 		mogo.set_value(0);
@@ -312,7 +318,7 @@ void autonomous()
 		//drive toward alliance stake
 		drive.setMaxDriveSpeed(0.7);
 		drive.setMaxDriveAccel(0.5);
-		drive.driveTiles(2200);
+		drive.driveTiles(2250);
 		drive.turnDegreesAbsolute(-8);
 		
 		// bring arm into position
@@ -343,7 +349,8 @@ void autonomous()
 		//drive and pick up one
 		intakeMotors.move(127);
 		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(1750);
+		drive.driveTiles(1700);
+		intake.move(-127);
 		pros::delay(1000);
 		drive.driveTiles(-450);
 
@@ -363,7 +370,9 @@ void autonomous()
 		drive.driveTiles(-500, 1000);
 		drive.setMaxDriveSpeed(0.7);
 		drive.driveTiles(3700, 2200);
-		//*/
+		drive.killPIDs();
+		arm.move(-127);
+		pros::delay(200);
 	}
 }
 

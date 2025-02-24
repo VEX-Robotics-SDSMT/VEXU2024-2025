@@ -345,6 +345,7 @@ void SensorInterface::Reset()
 
 //Encoder Wheel Sensor
 EncoderWheelSensorInterface::EncoderWheelSensorInterface(pros::ADIEncoder encoderL, pros::ADIEncoder encoderR) : encoderL(encoderL), encoderR(encoderR) {}
+//EncoderWheelSensorInterface::EncoderWheelSensorInterface(pros::ADIEncoder encoderL, pros::ADIEncoder encoderR) : encoderL(encoderL), encoderR(encoderR) {}
 
 double EncoderWheelSensorInterface::Get()
 {

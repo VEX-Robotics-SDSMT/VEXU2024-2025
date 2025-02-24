@@ -25,7 +25,7 @@ Mines::MinesMotorGroup intakeMotors(intakeVector);
 
 pros::ADIDigitalOut mogo(MOGO);
 pros::ADIDigitalOut lift(LIFT);
-bool red = 1;
+
 
 double axisPercentBlue = 600.0 / 127;
 double axisPercentGreen = 200.0 / 127;
@@ -42,3 +42,4 @@ int requiredColorLoops = 3;
 const double ROLLER_TIMEOUT = 3000;
 
 bool skills = true;
+bool red = 0;

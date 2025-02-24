@@ -38,7 +38,7 @@ extern pros::Imu intertialSensor;
 extern pros::Vision vision;
 extern pros::ADIEncoder driveEncoderL;
 extern pros::ADIEncoder driveEncoderR;
-//extern pros::GPS gps;
+extern pros::GPS gps;
 
 extern pros::Motor leftFront;
 extern pros::Motor leftMid;
