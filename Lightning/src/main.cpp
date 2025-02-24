@@ -213,26 +213,27 @@ void autonomous()
 		drive.setMaxDriveAccel(0.6);
 		drive.setMaxDriveSpeed(0.8);
 		
-		drive.driveTiles(-3100);
+		drive.driveTiles(-3000);
 		drive.setMaxDriveAccel(0.2);
 		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(-100);
+		drive.driveTiles(-150);
 		mogo.set_value(1);
 		drive.setMaxDriveSpeed(0.7);
-		drive.driveTiles(1000);
+		drive.driveTiles(1100);
 
 		//in case of bad grip
 		mogo.set_value(0);
 		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(-600); //400
+		pros::delay(200);
+		drive.driveTiles(-400); //400
 		mogo.set_value(1);
 
 		
 		//drive toward alliance stake
 		drive.setMaxDriveSpeed(0.7);
 		drive.setMaxDriveAccel(0.5);
-		drive.driveTiles(2200);
-		drive.turnDegreesAbsolute(29);
+		drive.driveTiles(2100);
+		drive.turnDegreesAbsolute(35);
 		// bring arm into position
 		arm.move(127);
 		pros::delay(500);
@@ -244,36 +245,32 @@ void autonomous()
 		intakeMotors.brake();
 
 		//put preload on alliance stake
-		intake.move(127);
-		drive.driveTiles(1300);
+		drive.driveTiles(1100);
 		arm.move(127);
 		pros::delay(770);
 		arm.move(-100);
 		pros::delay(100);
 		arm.brake();
-		drive.driveTiles(-1200);
+		drive.driveTiles(-1500);
 		arm.move(-127);
 		pros::delay(300);
 		arm.brake();
 		drive.turnDegreesAbsolute(-110);
-
 		
 		//drive and pick up one
 		intakeMotors.move(127);
-		conveyorMotors.move(100);
-		drive.setMaxDriveSpeed(0.3);
-		drive.driveTiles(1650);
+		drive.setMaxDriveSpeed(0.5);
+		drive.driveTiles(1500);
 		intake.move(-127); //run intake in reverse to prevent picking up blue ring
 		drive.driveTiles(-500);
 
 		//turn towards corner and clear it out
 		drive.turnDegreesAbsolute(-70);
-		intakeMotors.move(127);
-		drive.driveTiles(700);
 		intakeMotors.brake();
-		//clear twice
 		wing.set_value(1);
-		drive.turnDegreesAbsolute(0);
+		drive.driveTiles(700);
+		
+		drive.turnDegreesAbsolute(0, 700);
 		wing.set_value(0);		
 		drive.turnDegreesAbsolute(109);
 		drive.driveTiles(400);
@@ -284,10 +281,11 @@ void autonomous()
 
 		//go touch bar for WP
 		drive.setMaxDriveSpeed(0.7);
-		drive.driveTiles(3200, 2000);
+		drive.driveTiles(3100, 2000);
 		drive.killPIDs();
 		arm.move(127);
-		pros::delay(200);
+		pros::delay(100);
+		arm.brake();
 		
 
 
@@ -358,7 +356,7 @@ void autonomous()
 		drive.turnDegreesAbsolute(74);
 		intakeMotors.brake();
 		wing.set_value(1);
-		drive.driveTiles(1100);
+		drive.driveTiles(800);
 		drive.turnDegreesAbsolute(251);
 		intakeMotors.brake();
 
