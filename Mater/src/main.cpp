@@ -97,70 +97,65 @@ void autonomous()
 		intakeMotors.move(127);
 		drive.driveTiles(500);
 		drive.driveTiles(200);
-		drive.turnDegreesAbsolute(180);
-		drive.driveTiles(-500);
-		mogo.set_value(1);
-
-		drive.turnDegreesAbsolute(90);
-		//dump one
-		arm.move(-127);
-		pros::delay(700);
-		arm.move(127);
-		pros::delay(800);
-		arm.brake();
-
-		drive.driveTiles(800);
-		drive.driveTiles(200);
-
-		//dump one
-		arm.move(-127);
-		pros::delay(700);
-		arm.move(127);
-		pros::delay(800);
-		arm.brake();
-
-		//place in corner
 		drive.turnDegreesAbsolute(45);
-		drive.driveTiles(-2500, 3000);
-		mogo.set_value(0);
-		drive.driveTiles(-200, 800);
-		
-		//go back forward
-		drive.driveTiles(1000);
-		drive.turnDegreesAbsolute(0);
-		drive.driveTiles(3000);
-		drive.driveTiles(500);
-		drive.turnDegreesAbsolute(-135);
-
-		//get second MOGO
-		drive.driveTiles(-1000);
+		drive.setMaxDriveSpeed(0.5);
+		drive.driveTiles(1200);
+		drive.driveTiles(200);
+		drive.turnDegreesAbsolute(90);
+		drive.setMaxDriveSpeed(0.4);
+		drive.driveTiles(-600);
 		mogo.set_value(1);
 
-		//dump one
+		//reset mogo
+		drive.driveTiles(1000);
+
+		//dump two
 		arm.move(-127);
-		pros::delay(700);
+		pros::delay(750);
 		arm.move(127);
-		pros::delay(800);
+		pros::delay(850);
 		arm.brake();
 
-		drive.turnDegreesAbsolute(-45);
-		drive.driveTiles(2000);
-		pros::delay(1000);
 
-		//dump one
-		arm.move(-127);
-		pros::delay(700);
-		arm.move(127);
-		pros::delay(800);
-		arm.brake();
-
-		//place in corner
-		drive.turnDegreesAbsolute(135);
-		drive.driveTiles(-1000);
+		//dump in corner
+		drive.turnDegreesAbsolute(45);
+		drive.setMaxDriveSpeed(0.7);
+		drive.driveTiles(-1500);
 		mogo.set_value(0);
-		drive.driveTiles(-1500, 1000);
+		drive.driveTiles(-800, 1000);
+		drive.driveTiles(300);
 
-		//*/
+		//turn down middle to get next ring
+		drive.turnDegreesAbsolute(0);
+		drive.setMaxDriveSpeed(0.5);
+		drive.driveTiles(3500);
+		pros::delay(300);
+
+		//get next MOGO
+		drive.turnDegreesAbsolute(-90);
+		drive.setMaxDriveSpeed(0.4);
+		drive.driveTiles(-700);
+		mogo.set_value(1);
+		drive.setMaxDriveSpeed(0.5);
+		intakeMotors.brake();
+		drive.driveTiles(1300, 1500);
+
+		//dump two
+		arm.move(-127);
+		pros::delay(750);
+		arm.move(127);
+		pros::delay(850);
+		arm.brake();
+
+		//put mogo in corner
+		drive.turnDegreesAbsolute(180);
+		drive.setMaxDriveSpeed(0.7);
+		drive.driveTiles(-1100, 1200);
+		drive.turnDegreesAbsolute(160);
+		mogo.set_value(0);
+		drive.driveTiles(-800, 1000);
+		drive.driveTiles(1200);
+		drive.killPIDs();
 	}
 
 	else if(red)
