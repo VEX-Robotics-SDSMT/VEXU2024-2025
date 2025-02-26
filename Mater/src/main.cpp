@@ -161,83 +161,83 @@ void autonomous()
 	else if(red)
 	{
 		//get MOGO
-	drive.setMaxDriveAccel(0.5);
-	drive.driveTiles(-2450);
-	drive.setMaxDriveSpeed(0.2);
-	drive.driveTiles(-100);
-	mogo.set_value(1);
+		drive.setMaxDriveAccel(0.5);
+		drive.driveTiles(-2400);
+		drive.setMaxDriveSpeed(0.2);
+		drive.driveTiles(-150);
+		mogo.set_value(1);
 
-	//turn to first stack pick up one
-	//intakeMotors.move(127);
-	drive.setMaxDriveSpeed(0.6);
-	drive.driveTiles(700);
+		//turn to first stack pick up one
+		//intakeMotors.move(127);
+		drive.setMaxDriveSpeed(0.6);
+		drive.driveTiles(700);
 
-	//regrip in case
-	mogo.set_value(0);
-	drive.setMaxDriveSpeed(0.2);
-	drive.driveTiles(-200);
-	mogo.set_value(1);
+		//regrip in case
+		mogo.set_value(0);
+		drive.setMaxDriveSpeed(0.2);
+		pros::delay(200);
+		drive.driveTiles(-200);
+		mogo.set_value(1);
 
-	drive.setMaxDriveSpeed(0.7);
-	drive.driveTiles(500);
+		drive.setMaxDriveSpeed(0.5);
+		drive.driveTiles(500);
 
-	//dump one
-	arm.move(-127);
-	pros::delay(700);
-	arm.move(127);
-	pros::delay(800);
-	arm.brake();
+		//dump one
+		arm.move(-127);
+		pros::delay(700);
+		arm.move(127);
+		pros::delay(800);
+		arm.brake();
 
-	//drop MOGO and grab second
-	mogo.set_value(0);
-	drive.driveTiles(900);
-	drive.turnDegreesAbsolute(120);
-	drive.setMaxDriveSpeed(0.3);
-	drive.driveTiles(-500);
-	mogo.set_value(1);
+		//drop MOGO and grab second
+		mogo.set_value(0);
+		drive.driveTiles(900);
+		drive.turnDegreesAbsolute(120);
+		drive.setMaxDriveSpeed(0.3);
+		drive.driveTiles(-500);
+		mogo.set_value(1);
 
-	//drive to get next stack
-	drive.setMaxDriveSpeed(0.6);
-	intakeMotors.move(127);
-	drive.driveTiles(1600);
-	drive.driveTiles(200);
-	//pros::delay(1200);
-	drive.driveTiles(-2700); // might need to remove this
+		//drive to get next stack
+		drive.setMaxDriveSpeed(0.6);
+		intakeMotors.move(127);
+		drive.driveTiles(1600);
+		drive.driveTiles(200);
+		//pros::delay(1200);
+		drive.driveTiles(-2700); // might need to remove this
 
-	//dump one
-	arm.move(-127);
-	pros::delay(700);
-	arm.move(127);
-	pros::delay(800);
-	arm.brake();
+		//dump one
+		arm.move(-127);
+		pros::delay(700);
+		arm.move(127);
+		pros::delay(800);
+		arm.brake();
 
-	//drive.driveTiles(-2700);
-	drive.turnDegreesAbsolute(80);
+		//drive.driveTiles(-2700);
+		drive.turnDegreesAbsolute(80);
 
-	//pick up knocked from LIGHTNING
-	drive.driveTiles(600);
-	drive.driveTiles(200);
-	pros::delay(700);
+		//pick up knocked from LIGHTNING
+		drive.driveTiles(600);
+		drive.driveTiles(200);
+		pros::delay(700);
 
-	//dump one
-	arm.move(-127);
-	pros::delay(700);
-	arm.move(127);
-	pros::delay(800);
-	arm.brake();
+		//dump one
+		arm.move(-127);
+		pros::delay(700);
+		arm.move(127);
+		pros::delay(800);
+		arm.brake();
 
-	//drop MOGO and get to the bar
-	drive.driveTiles(-600);
-	mogo.set_value(0);
-	drive.turnDegreesAbsolute(-15);
-	drive.setMaxDriveAccel(0.5);
-	drive.driveTiles(-1700);
-	drive.turnDegreesAbsolute(60);
-	arm.move(-127);
-	pros::delay(300);
-	drive.driveTiles(-1000, 1000);
+		//drop MOGO and get to the bar
+		drive.driveTiles(-400);
+		//mogo.set_value(0);
+		drive.turnDegreesAbsolute(-165);
+		drive.setMaxDriveAccel(0.5);
+		drive.driveTiles(1500, 2000);
+		//drive.driveTiles(-200, 1000);
+		
+		
 
-	drive.killPIDs();
+		drive.killPIDs();
 	}
 	else //BLUE ROUTE
 	{
