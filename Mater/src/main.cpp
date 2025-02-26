@@ -244,15 +244,15 @@ void autonomous()
 		
 		//get MOGO
 		drive.setMaxDriveAccel(0.5);
-		drive.driveTiles(-2400);
+		drive.driveTiles(-2350);
 		drive.setMaxDriveSpeed(0.2);
-		drive.driveTiles(-100);
+		drive.driveTiles(-200);
 		mogo.set_value(1);
 
 		//turn to first stack pick up one
 		//intakeMotors.move(127);
 		drive.setMaxDriveSpeed(0.7);
-		drive.driveTiles(700);
+		drive.driveTiles(750);
 
 		//regrip in case
 		mogo.set_value(0);
@@ -309,16 +309,12 @@ void autonomous()
 		arm.brake();
 
 		//drop MOGO and get to the bar
-		drive.driveTiles(-500);
+		drive.driveTiles(-400);
 		//mogo.set_value(0);
-		drive.turnDegreesAbsolute(15);
+		drive.turnDegreesAbsolute(170);
 		drive.setMaxDriveAccel(0.5);
-		drive.driveTiles(-1600);
-		drive.turnDegreesAbsolute(300);
-		arm.move(-127);
-		pros::delay(300);
-		drive.driveTiles(-1000, 1000);
-
+		drive.driveTiles(1500, 2000);
+		//drive.driveTiles(-200, 1000);
 		drive.killPIDs();
 		//*/
 	}	
