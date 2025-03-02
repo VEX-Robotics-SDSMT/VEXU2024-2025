@@ -207,90 +207,6 @@ void autonomous()
 		//*/
 	}
 	else if (red_team) {
-		//RED MATCH AUTO (30 sec)
-
-		// //rush forward toward MOGO on right
-		// drive.setMaxDriveAccel(0.6);
-		// drive.setMaxDriveSpeed(0.8);
-		
-		// drive.driveTiles(-1800);
-		// drive.setMaxDriveAccel(0.2);
-		// drive.setMaxDriveSpeed(0.4);
-		// drive.driveTiles(-150);
-		// mogo.set_value(1);
-		// drive.setMaxDriveSpeed(0.7);
-		// drive.driveTiles(500);
-
-		// //in case of bad grip
-		// mogo.set_value(0);
-		// drive.setMaxDriveSpeed(0.4);
-		// pros::delay(200);
-		// drive.driveTiles(-200); //400
-		// mogo.set_value(1);
-
-		
-		// //drive toward alliance stake
-		// drive.setMaxDriveSpeed(0.7);
-		// drive.setMaxDriveAccel(0.5);
-		// drive.driveTiles(1000);
-		// drive.turnDegreesAbsolute(26);
-
-		
-		// // bring arm into position
-		// arm.move(127);
-		// pros::delay(500);
-		// arm.move(-127);
-		// pros::delay(700);
-		// arm.brake();
-		// intakeMotors.move(127);
-		// pros::delay(700);
-		// intakeMotors.brake();
-
-		
-		// //put preload on alliance stake
-		// drive.driveTiles(980);
-		// arm.move(127);
-		// pros::delay(750);
-		// arm.move(-100);
-		// pros::delay(200);
-		// arm.brake();
-		
-		// drive.driveTiles(-600);
-		// arm.move(-127);
-		// pros::delay(300);
-		// arm.brake();
-		// drive.turnDegreesAbsolute(-110);
-		
-		// //drive and pick up one
-		// intakeMotors.move(127);
-		// drive.setMaxDriveSpeed(0.5);
-		// drive.driveTiles(1050);
-		// intake.move(-127); //run intake in reverse to prevent picking up blue ring
-		// //drive.driveTiles(-500);
-		
-		// //turn towards corner and clear it out
-		// drive.turnDegreesAbsolute(-70);
-		// wing.set_value(1);
-		// drive.driveTiles(300);
-		// intakeMotors.brake();
-		
-		// drive.turnDegreesAbsolute(0, 700);
-		// wing.set_value(0);		
-		// drive.turnDegreesAbsolute(109);
-		// drive.driveTiles(200);
-
-		// //back and drop mogo in corner
-		// mogo.set_value(0);
-		// drive.driveTiles(-800, 800);
-
-		// //go touch bar for WP
-		// drive.setMaxDriveSpeed(0.7);
-		// drive.driveTiles(1800, 2000);
-		// drive.killPIDs();
-		// arm.move(127);
-		// pros::delay(100);
-		// arm.brake();
-		
 
 		arm.move(127);
 		pros::delay(500);
@@ -304,18 +220,18 @@ void autonomous()
 		pros::delay(900);
 		arm.brake();
 		
-		drive.driveTiles(-600);
-		arm.move(-127);
+		drive.driveTiles(-1200);
+		arm.move(127);
 		pros::delay(900);
-		arm.brake();
-		drive.driveTiles(-1500);
-		drive.turnDegreesAbsolute(90);
-		drive.setMaxDriveSpeed(0.5);
-		drive.driveTiles(2200, 2500);
-		
-		arm.move(100);
-		pros::delay(250);
-		arm.brake();
+		arm.brake();	
+		drive.turnDegreesAbsolute(-140);
+		drive.setMaxDriveSpeed(0.3);
+		drive.driveTiles(-940);
+		mogo.set_value(1);
+		drive.setMaxDriveSpeed(.7);
+		intakeMotors.move(127);
+		drive.driveTiles(1890);
+
 
 		//*/
 	}

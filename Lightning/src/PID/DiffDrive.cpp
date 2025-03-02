@@ -32,6 +32,7 @@ DiffDrive::DiffDrive(MinesMotorGroup left, MinesMotorGroup right, SensorInterfac
 
     driveSensorInterface = driveSensors;
     driveSensorInterface->Reset();
+    int direction = 1;
     StartPIDs();
 }
 
@@ -82,6 +83,7 @@ void DiffDrive::driveTiles(double target, int timeOut)
 
 void DiffDrive::turnDegreesAbsolute(double target, bool waitForCompletion)
 {
+    drivePID.SetTaskPaused(true);
     turnPID.SetTarget(target);
     if(waitForCompletion)
     {
@@ -90,10 +92,12 @@ void DiffDrive::turnDegreesAbsolute(double target, bool waitForCompletion)
             pros::c::delay(20);
         }
     }
+    drivePID.SetTaskPaused(false);
 }   
 
 void DiffDrive::turnDegreesAbsolute(double target, int timeOut)
 {
+    drivePID.SetTaskPaused(true);
     turnPID.SetTarget(target);
     while(turnPID.GetTimeSinceTargetReached() < GOAL_TIME && turnPID.GetTimeSinceTargetSet() < timeOut)
     {
@@ -101,6 +105,7 @@ void DiffDrive::turnDegreesAbsolute(double target, int timeOut)
     }
 
     turnPID.SetTarget(getTurnPosition());
+    drivePID.SetTaskPaused(false);
 }
 
 void DiffDrive::setBrakeMode(pros::motor_brake_mode_e mode)
@@ -355,7 +360,7 @@ double EncoderWheelSensorInterface::Get()
 
     /* edit the following line if wheel encoders are off*/
     double avg = -(sensorValL - sensorValR) / 2;
-    return avg;
+    return -sensorValL;
 }
 
 void EncoderWheelSensorInterface::Reset()
@@ -369,7 +374,7 @@ DiffDrive::DriveSensorInterface::DriveSensorInterface(MinesMotorGroup left, Mine
 
 double DiffDrive::DriveSensorInterface::Get()
 {
-    return (left.getPosition() + right.getPosition()) / 2;
+    return left.getPosition();//(left.getPosition() + right.getPosition()) / 2;
 }
 
 void DiffDrive::DriveSensorInterface::Reset()

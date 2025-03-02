@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Lightning_SKILLS",
+    "project_name": "LightningRED",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -311,7 +311,7 @@
     "upload_options": {
       "icon": "clawbot",
       "description": "Lightning",
-      "slot": 3
+      "slot": 1
     }
   }
 }
