@@ -5,7 +5,7 @@
 #include "MinesMotorGroup.h"
 #include "pros/adi.hpp"
 
-#define INERTIAL_SENSOR 2
+#define INERTIAL_SENSOR 3
 #define VISION_SENSOR 4
 #define VEX_GPS 21
 #define ENCODER_TOP_R 1

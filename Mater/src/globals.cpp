@@ -6,6 +6,10 @@ pros::Controller MasterController (pros::E_CONTROLLER_MASTER);
 pros::Imu intertialSensor(INERTIAL_SENSOR);
 pros::ADIEncoder tracking(TRACKING_TOP, TRACKING_BOT, false);
 
+//RED Motors E_MOTOR_GEARSET_36
+//GREEN Motors E_MOTOR_GEARSET_18
+//BLUE Motors E_MOTOR_GEARSET_06
+
 pros::Motor leftFront(L_FRONT, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor leftMid(L_MID, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor leftRear(L_REAR, pros::E_MOTOR_GEARSET_06, true);
