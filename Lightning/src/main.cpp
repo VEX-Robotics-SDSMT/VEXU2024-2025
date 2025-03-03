@@ -207,7 +207,7 @@ void autonomous()
 		//*/
 	}
 	else if (red_team) {
-
+		//place preload on alliance stake
 		arm.move(127);
 		pros::delay(500);
 		arm.move(-127);
@@ -220,18 +220,48 @@ void autonomous()
 		pros::delay(900);
 		arm.brake();
 		
+		//back up and grab mogo
 		drive.driveTiles(-1200);
-		arm.move(127);
-		pros::delay(900);
+		arm.move(-127);
+		pros::delay(500);
 		arm.brake();	
 		drive.turnDegreesAbsolute(-140);
 		drive.setMaxDriveSpeed(0.3);
-		drive.driveTiles(-940);
+		drive.driveTiles(-1100);
 		mogo.set_value(1);
+		
+		//drive forward to get ring on line
 		drive.setMaxDriveSpeed(.7);
 		intakeMotors.move(127);
-		drive.driveTiles(1890);
+		drive.driveTiles(2080);
+		pros::delay(200);
 
+		//back up to get ring by alliance stake
+		drive.driveTiles(-1800);
+		drive.turnDegreesAbsolute(0);
+		drive.driveTiles(900);
+		drive.driveTiles(-900);
+		pros::delay(200);
+
+		//turn to clear corner
+		intakeMotors.brake();
+		drive.turnDegreesAbsolute(-145);
+		conveyorMotors.move(127);
+		drive.driveTiles(2200);
+		drive.turnDegreesAbsolute(-100);
+		conveyorMotors.brake();
+		wing.set_value(1);
+		drive.driveTiles(700, 800);
+		drive.turnDegreesAbsolute(80, 2000);
+		
+
+		//touch ladder with arm
+		wing.set_value(0);
+		drive.driveTiles(2550);
+		arm.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+		arm.move(127);
+		pros::delay(300);
+		arm.brake();
 
 		//*/
 	}
@@ -347,19 +377,19 @@ void opcontrol()
 	{	
 		// ********************DRIVE********************
 		// 2 stick arcade
-		double leftAxisY = MasterController.get_analog(axisRightY);
-		double rightAxisX = MasterController.get_analog(axisLeftX);
-		double leftVelocity = ((leftAxisY + rightAxisX));
-		double rightVelocity = ((leftAxisY - rightAxisX));
+		// double leftAxisY = MasterController.get_analog(axisRightY);
+		// double rightAxisX = MasterController.get_analog(axisLeftX);
+		// double leftVelocity = ((leftAxisY + rightAxisX));
+		// double rightVelocity = ((leftAxisY - rightAxisX));
 
 		// 1 stick arcade
-		// double leftAxisY = MasterController.get_analog(axisLeftY);
-		// double leftAxisX = MasterController.get_analog(axisLeftX);
-		// double rightAxisX = MasterController.get_analog(axisRightX);
-		// double aimVelocityLeft = (rightAxisX) * 0.06;
-		// double aimVelocityRight = -rightAxisX * 0.06;
-		// double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
-		// double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
+		double leftAxisY = MasterController.get_analog(axisLeftY);
+		double leftAxisX = MasterController.get_analog(axisLeftX);
+		double rightAxisX = MasterController.get_analog(axisRightX);
+		double aimVelocityLeft = (rightAxisX) * 0.06;
+		double aimVelocityRight = -rightAxisX * 0.06;
+		double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
+		double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
 
 		// Tank
 		// double leftAxisY = MasterController.get_analog(axisLeftY);
