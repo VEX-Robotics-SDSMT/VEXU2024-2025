@@ -97,117 +97,60 @@ void autonomous()
 	
 	if (skills) {
 		//skills route (1 min)
-		//Start perpendicular to alliance stake intake facing away
-		drive.setMaxDriveSpeed(0.5);
 
-		//1 bring arm up and drop intake
-		arm.move(127);
-		pros::delay(500);
-		arm.move(-127);
-		intakeMotors.move(127);
-		pros::delay(600);
-		arm.brake();
-
-		//drive forward pick up into arm, spin around 180
-		drive.driveTiles(600);
-		pros::delay(500);
+		//inake one slow and grab first MOGO
+		intake.move(127);
+		conveyorMotors.move(50);
+		drive.driveTiles(1800);
+		drive.turnDegreesAbsolute(270);
 		intakeMotors.brake();
-		drive.turnDegreesAbsolute(178);
-		pros::delay(200);
-
-		//drive forward a tad bit and lift arm onto wall stake
-		drive.driveTiles(350); //tune this a bit more
+		drive.setMaxDriveSpeed(0.3);
+		drive.driveTiles(-1000);
+		mogo.set_value(1);
+		//move arm and place ring
 		arm.move(127);
-		pros::delay(700);
+		pros::delay(300);
 		arm.brake();
-		pros::delay(200);
+		intakeMotors.move(127);
+		//get next rings
+		drive.setMaxDriveSpeed(0.7);
 		drive.driveTiles(-400);
+		drive.turnDegreesAbsolute(180);
+		drive.driveTiles(1500);
+		drive.turnDegreesAbsolute(315);
+		//place goal in corner
+		mogo.set_value(0);
+		drive.driveTiles(-900, 1500);
+		drive.driveTiles(600);
+		//turn down line and grab next ring
+		drive.turnDegreesAbsolute(0);
+		intake.move(127);
+		conveyorMotors.move(50);
+		drive.setMaxDriveSpeed(0.7);
+		drive.driveTiles(2650);
+		//back up to mogo
+		drive.turnDegreesAbsolute(135);
+		conveyorMotors.brake();
+		drive.setMaxDriveSpeed(0.3);
+		drive.driveTiles(-2500);
+		mogo.set_value(1);
+		intakeMotors.move(127);
+		//grab first ring in triangle
+		drive.setMaxDriveSpeed(0.7);
+		drive.turnDegreesAbsolute(100);
+		drive.driveTiles(1700);
+		drive.turnDegreesAbsolute(0);
+		drive.driveTiles(1200);
+		pros::delay(500);
+		drive.turnDegreesAbsolute(225);
+		//place goal in corner
+		mogo.set_value(0);
+		drive.driveTiles(-1100, 1500);
+		drive.driveTiles(600);
 
-		//bring arm back down drive to get MOGO on right
-		// arm.move(-127);
-		// drive.driveTiles(400);
-		// arm.brake();
-		// drive.turnDegreesAbsolute(250);	//check angle
-
-		// //drive then turn to hit flat side of MOGO
-		// drive.setMaxDriveSpeed(0.6);
-		// drive.driveTiles(-2300);	//2400
-
-		// drive.setMaxDriveSpeed(0.4);
-		// drive.turnDegreesAbsolute(212); //b/t 210 and 214
-		// drive.driveTiles(-1000);
-		// mogo.set_value(1);
-
-		// //turn to grap rings in line
-		// drive.setMaxDriveSpeed(0.5);
-		// intakeMotors.move(127);
-		// pros::delay(200);
-		// arm.move(90);
-		// drive.turnDegreesAbsolute(0);
-		// arm.brake();
-		// drive.driveTiles(3200);
-		// pros::delay(500);
-
-		// //back up and turn to hit diagoanal to corner
-		// drive.setMaxDriveSpeed(0.7);
-		// drive.driveTiles(-1500);
-		// drive.turnDegreesAbsolute(220);
-		// drive.driveTiles(2200); 	//was 2000
-		// drive.turnDegreesAbsolute(135);
-
-		// //bring arm back up a bit and drive toward corner
-		// drive.setMaxDriveSpeed(0.5);
-		// arm.move(-90);
-		// pros::delay(500);
-		// arm.brake();
-		// drive.driveTiles(3500, 2000);		//two second timeout
-		// pros::delay(500);
-
-		// //ram wall again for consistency
-		// drive.driveTiles(-1000);
-		// drive.driveTiles(1000, 1000);
-
-		// //back up spin and drop MOGO in + corner
-		// drive.driveTiles(-800);
-		// drive.turnDegreesAbsolute(315);
-		// intakeMotors.move(-127);
-		// drive.driveTiles(-800);
-		// mogo.set_value(0);
-		// drive.driveTiles(800);
-
-		// //turn drive downfield
-		// drive.setMaxDriveSpeed(0.7);
-		// drive.turnDegreesAbsolute(0);
-		// intakeMotors.brake();
-		// drive.driveTiles(4200);
-
-		// //turn to back into second MOGO
-		// drive.turnDegreesAbsolute(90);
-		// drive.setMaxDriveSpeed(0.4);
-		// drive.driveTiles(-1200);
-		// mogo.set_value(1);
-	
-		// //drive forward and turn toward corner and push twice
-		// drive.setMaxDriveSpeed(0.5);
-		// drive.driveTiles(200);
-		// intakeMotors.move(127);
-		// drive.turnDegreesAbsolute(45);
-		// drive.driveTiles(3000);
-		// //liftintake
-		// drive.driveTiles(-700);
-		// drive.driveTiles(2000, 1000); //with timeout in case doesn't get there
-
-		// //place mogo in corner
-		// drive.driveTiles(-1500);
-		// drive.turnDegreesAbsolute(225);
-		// drive.driveTiles(-1500);
-		// mogo.set_value(0);
-		// drive.driveTiles(1000);
-	
-		//*/
 	}
-	else if (red_team) {
-
+	else {
+		//place preload on alliance stake
 		arm.move(127);
 		pros::delay(500);
 		arm.move(-127);
@@ -220,108 +163,147 @@ void autonomous()
 		pros::delay(900);
 		arm.brake();
 		
+		//back up and grab mogo
 		drive.driveTiles(-1200);
-		arm.move(127);
-		pros::delay(900);
+		arm.move(-127);
+		pros::delay(500);
 		arm.brake();	
 		drive.turnDegreesAbsolute(-140);
 		drive.setMaxDriveSpeed(0.3);
-		drive.driveTiles(-940);
+		drive.driveTiles(-1100);
 		mogo.set_value(1);
+		
+		//drive forward to get ring on line
 		drive.setMaxDriveSpeed(.7);
 		intakeMotors.move(127);
-		drive.driveTiles(1890);
+		drive.driveTiles(2080);
+		pros::delay(200);
 
+		//back up to get ring by alliance stake
+		drive.driveTiles(-1800);
+		drive.turnDegreesAbsolute(0);
+		drive.driveTiles(900);
+		drive.driveTiles(-900);
+		pros::delay(200);
 
-		//*/
-	}
-	else {
-		//BLUE MATCH AUTO (30 sec)
-
-		//rush forward toward MOGO on right
-		drive.setMaxDriveAccel(0.6);
-		drive.setMaxDriveSpeed(0.8);
-		
-		drive.driveTiles(-3250);
-		drive.setMaxDriveAccel(0.2);
-		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(-150);
-		mogo.set_value(1);
-		drive.setMaxDriveSpeed(0.7);
-		drive.driveTiles(800);
-
-		//in case of bad grip
-		mogo.set_value(0);
-		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(-400); //400
-		mogo.set_value(1);
-
-		
-		//drive toward alliance stake
-		drive.setMaxDriveSpeed(0.7);
-		drive.setMaxDriveAccel(0.5);
-		drive.driveTiles(2200);
-		drive.turnDegreesAbsolute(-12);
-		
-		// bring arm into position
-		arm.move(127);
-		pros::delay(500);
-		arm.move(-127);
-		pros::delay(700);
-		arm.brake();
-		intakeMotors.move(127);
-		pros::delay(700);
+		//turn to clear corner
 		intakeMotors.brake();
+		drive.turnDegreesAbsolute(-145);
+		conveyorMotors.move(127);
+		drive.driveTiles(2200);
+		drive.turnDegreesAbsolute(-100);
+		conveyorMotors.brake();
+		wing.set_value(1);
+		drive.driveTiles(700, 800);
+		drive.turnDegreesAbsolute(80, 2000);
 
-		//put preload on alliance stake
-		intake.move(127);
-		drive.driveTiles(1200);
+		//drop mogo incorner if red
+		if(red_team) {
+			mogo.set_value(0);
+			conveyorMotors.move(-127);
+			drive.driveTiles(-800, 1000);
+			drive.driveTiles(400);
+			conveyorMotors.brake();
+		}
+
+		//touch ladder with arm
+		
+		wing.set_value(0);
+		drive.driveTiles(2550);
+		arm.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		arm.move(127);
-		pros::delay(770);
-		arm.move(-100);
-		pros::delay(100);
-		arm.brake();
-		drive.driveTiles(-2000);
-		
-		
-		arm.move(-127);
 		pros::delay(300);
 		arm.brake();
 
-		drive.turnDegreesAbsolute(270);
-		drive.driveTiles(1500, 2000);
-		drive.killPIDs();
-		/*
-		drive.turnDegreesAbsolute(117);
-		//drive and pick up one
-		intakeMotors.move(127);
-		drive.setMaxDriveSpeed(0.4);
-		drive.driveTiles(1700);
-		intake.move(-127);
-		pros::delay(1000);
-		drive.driveTiles(-450);
-
-		//turn towards corner and clear it out
-		drive.turnDegreesAbsolute(74);
-		intakeMotors.brake();
-		wing.set_value(1);
-		drive.driveTiles(800);
-		drive.turnDegreesAbsolute(251);
-		intakeMotors.brake();
-
-		//go touch bar for WP
-		wing.set_value(0);
-		drive.driveTiles(300);
-		drive.driveTiles(-800);
-		mogo.set_value(0);
-		drive.driveTiles(-500, 1000);
-		drive.setMaxDriveSpeed(0.7);
-		drive.driveTiles(3700, 2200);
-		drive.killPIDs();
-		arm.move(-127);
-		pros::delay(200);
 		//*/
 	}
+	// else {
+	// 	//BLUE MATCH AUTO (30 sec)
+
+	// 	//rush forward toward MOGO on right
+	// 	drive.setMaxDriveAccel(0.6);
+	// 	drive.setMaxDriveSpeed(0.8);
+		
+	// 	drive.driveTiles(-3250);
+	// 	drive.setMaxDriveAccel(0.2);
+	// 	drive.setMaxDriveSpeed(0.4);
+	// 	drive.driveTiles(-150);
+	// 	mogo.set_value(1);
+	// 	drive.setMaxDriveSpeed(0.7);
+	// 	drive.driveTiles(800);
+
+	// 	//in case of bad grip
+	// 	mogo.set_value(0);
+	// 	drive.setMaxDriveSpeed(0.4);
+	// 	drive.driveTiles(-400); //400
+	// 	mogo.set_value(1);
+
+		
+	// 	//drive toward alliance stake
+	// 	drive.setMaxDriveSpeed(0.7);
+	// 	drive.setMaxDriveAccel(0.5);
+	// 	drive.driveTiles(2200);
+	// 	drive.turnDegreesAbsolute(-12);
+		
+	// 	// bring arm into position
+	// 	arm.move(127);
+	// 	pros::delay(500);
+	// 	arm.move(-127);
+	// 	pros::delay(700);
+	// 	arm.brake();
+	// 	intakeMotors.move(127);
+	// 	pros::delay(700);
+	// 	intakeMotors.brake();
+
+	// 	//put preload on alliance stake
+	// 	intake.move(127);
+	// 	drive.driveTiles(1200);
+	// 	arm.move(127);
+	// 	pros::delay(770);
+	// 	arm.move(-100);
+	// 	pros::delay(100);
+	// 	arm.brake();
+	// 	drive.driveTiles(-2000);
+		
+		
+	// 	arm.move(-127);
+	// 	pros::delay(300);
+	// 	arm.brake();
+
+	// 	drive.turnDegreesAbsolute(270);
+	// 	drive.driveTiles(1500, 2000);
+	// 	drive.killPIDs();
+	// 	/*
+	// 	drive.turnDegreesAbsolute(117);
+	// 	//drive and pick up one
+	// 	intakeMotors.move(127);
+	// 	drive.setMaxDriveSpeed(0.4);
+	// 	drive.driveTiles(1700);
+	// 	intake.move(-127);
+	// 	pros::delay(1000);
+	// 	drive.driveTiles(-450);
+
+	// 	//turn towards corner and clear it out
+	// 	drive.turnDegreesAbsolute(74);
+	// 	intakeMotors.brake();
+	// 	wing.set_value(1);
+	// 	drive.driveTiles(800);
+	// 	drive.turnDegreesAbsolute(251);
+	// 	intakeMotors.brake();
+
+	// 	//go touch bar for WP
+	// 	wing.set_value(0);
+	// 	drive.driveTiles(300);
+	// 	drive.driveTiles(-800);
+	// 	mogo.set_value(0);
+	// 	drive.driveTiles(-500, 1000);
+	// 	drive.setMaxDriveSpeed(0.7);
+	// 	drive.driveTiles(3700, 2200);
+	// 	drive.killPIDs();
+	// 	arm.move(-127);
+	// 	pros::delay(200);
+	// 	//*/
+	// }
 }
 
 /**
@@ -347,19 +329,19 @@ void opcontrol()
 	{	
 		// ********************DRIVE********************
 		// 2 stick arcade
-		double leftAxisY = MasterController.get_analog(axisRightY);
-		double rightAxisX = MasterController.get_analog(axisLeftX);
-		double leftVelocity = ((leftAxisY + rightAxisX));
-		double rightVelocity = ((leftAxisY - rightAxisX));
+		// double leftAxisY = MasterController.get_analog(axisRightY);
+		// double rightAxisX = MasterController.get_analog(axisLeftX);
+		// double leftVelocity = ((leftAxisY + rightAxisX));
+		// double rightVelocity = ((leftAxisY - rightAxisX));
 
 		// 1 stick arcade
-		// double leftAxisY = MasterController.get_analog(axisLeftY);
-		// double leftAxisX = MasterController.get_analog(axisLeftX);
-		// double rightAxisX = MasterController.get_analog(axisRightX);
-		// double aimVelocityLeft = (rightAxisX) * 0.06;
-		// double aimVelocityRight = -rightAxisX * 0.06;
-		// double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
-		// double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
+		double leftAxisY = MasterController.get_analog(axisLeftY);
+		double leftAxisX = MasterController.get_analog(axisLeftX);
+		double rightAxisX = MasterController.get_analog(axisRightX);
+		double aimVelocityLeft = (rightAxisX) * 0.06;
+		double aimVelocityRight = -rightAxisX * 0.06;
+		double leftVelocity = ((leftAxisY + leftAxisX + aimVelocityLeft));
+		double rightVelocity = ((leftAxisY - leftAxisX + aimVelocityRight));
 
 		// Tank
 		// double leftAxisY = MasterController.get_analog(axisLeftY);
