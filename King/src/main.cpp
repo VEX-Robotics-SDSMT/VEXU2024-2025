@@ -104,7 +104,95 @@ void autonomous()
 	
 	if (skills)  // Skills
 	{
-		
+		drive.setMaxDriveSpeed(0.6); 
+		intakeMotors.move(600);
+		drive.driveTiles(250);
+		drive.driveTiles(-225);
+		pros::delay(1000);
+		drive.driveTiles(225);
+		drive.turnDegreesAbsolute(-90);
+		drive.driveTiles(1200);
+		intakeMotors.brake();
+		intake.move(127);
+		conveyorMotors.move(50);
+
+		drive.turnDegreesAbsolute(0);
+		drive.driveTiles(1525);
+		drive.turnDegreesAbsolute(90);
+		intakeMotors.brake();
+		drive.setMaxDriveSpeed(0.3);
+		drive.driveTiles(-950);
+		mogo.set_value(1);
+		intakeMotors.move(127);
+
+		drive.setMaxDriveSpeed(0.6);
+		drive.turnDegreesAbsolute(0);
+		drive.driveTiles(950);
+		drive.turnDegreesAbsolute(-90);
+		drive.driveTiles(350);
+		drive.driveTiles(-350);
+		drive.turnDegreesAbsolute(180);
+		drive.driveTiles(2350);
+		drive.driveTiles(-250);
+
+		drive.turnDegreesAbsolute(-135); // turn towards corner
+		drive.driveTiles(850, 2000);
+		drive.driveTiles(-550);
+		drive.turnDegreesAbsolute(45);
+		mogo.set_value(0);
+		drive.setMaxDriveSpeed(.3);
+		drive.driveTiles(-300, 1000);
+		drive.setMaxDriveSpeed(.6);
+		drive.driveTiles(675);
+
+		drive.turnDegreesAbsolute(0);
+		drive.driveTiles(3250);
+		intakeMotors.brake();
+		intake.move(127);
+		conveyorMotors.move(45);
+
+		drive.turnDegreesAbsolute(-90);
+		conveyorMotors.brake();
+		drive.setMaxDriveSpeed(.3);
+		drive.driveTiles(-1200);
+		mogo.set_value(1);
+		drive.setMaxDriveSpeed(.6);
+		drive.turnDegreesAbsolute(-45);
+		drive.driveTiles(400);
+		intakeMotors.move(127);
+		drive.driveTiles(1300);
+		intakeMotors.brake();
+		conveyorMotors.move(127);
+		intake.move(-600);
+		wing.set_value(1);
+		drive.turnDegreesAbsolute(-100);
+		wing.set_value(0);
+		drive.turnDegreesAbsolute(120);
+		drive.turnDegreesAbsolute(155);
+		intakeMotors.brake();
+		mogo.set_value(0);
+		drive.setMaxDriveSpeed(.3);
+		drive.driveTiles(-400, 1500);
+		drive.setMaxDriveSpeed(.6);
+		drive.driveTiles(675);
+		drive.turnDegreesAbsolute(90);
+		while(limitSwitch.get_value())
+			arm.move(-127);
+		pros::delay(5);
+		arm.brake();
+		intakeMotors.move(90);
+		drive.driveTiles(1000);
+		drive.turnDegreesAbsolute(52);
+		pros::delay(2000);
+		intakeMotors.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+		intakeMotors.brake();
+		drive.driveTiles(925);
+		arm.move(-127);
+		pros::delay(750);
+		arm.move(127);
+		pros::delay(200);
+		arm.brake();
+		drive.driveTiles(-500);				
 	}
 	else // Red auto
 	{
