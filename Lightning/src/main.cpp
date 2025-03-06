@@ -126,8 +126,9 @@ void autonomous()
 		drive.turnDegreesAbsolute(315);
 
 		//place goal in corner
+		drive.setMaxDriveSpeed(0.3);
 		mogo.set_value(0);
-		drive.driveTiles(-900, 1500);
+		drive.driveTiles(-800, 1500);
 		drive.driveTiles(600);
 
 		//turn down line and grab next ring
@@ -166,12 +167,13 @@ void autonomous()
 		drive.turnDegreesAbsolute(270);
 		drive.driveTiles(1300);
 		drive.driveTiles(100);
-		drive.turnDegreesAbsolute(250);
+		drive.turnDegreesAbsolute(245);
 
 		//place goal in corner
 		drive.driveTiles(-1500);
 		mogo.set_value(0);
 		conveyorMotors.move(-127);
+		drive.setMaxDriveSpeed(0.5);
 		drive.driveTiles(-800, 1000);
 		drive.driveTiles(1000);
 		drive.turnDegreesAbsolute(0);
@@ -180,8 +182,8 @@ void autonomous()
 		drive.turnDegreesAbsolute(0);
 		intakeMotors.move(127);
 		drive.SetPausedPID(true);
-		leftDriveMotors.move(127);
-		rightDriveMotors.move(127);
+		leftDriveMotors.move(80);
+		rightDriveMotors.move(80);
 		pros::delay(1000);
 		leftDriveMotors.brake();
 		rightDriveMotors.brake();
@@ -191,23 +193,28 @@ void autonomous()
         drive.SetPausedPID(false);
 		
 		//turn along to grab next ring by wall stake
+		drive.setMaxDriveSpeed(0.7);
 		drive.driveTiles(-300);
 		drive.turnDegreesAbsolute(270);
 		conveyorMotors.move(50);
-		drive.driveTiles(3500);
+		drive.driveTiles(3000);
+		drive.setMaxDriveSpeed(0.5);
+		drive.driveTiles(500);
 		intakeMotors.brake();
+		intake.move(-127);
 		drive.turnDegreesAbsolute(300);
 		drive.setMaxDriveSpeed(0.3);
 		drive.driveTiles(-3200);
 		mogo.set_value(1);
 
-		//go under and score four stack
+		//go under and score four pile
 		arm.move(127);
 		pros::delay(800);
 		arm.brake();
+		drive.setMaxDriveSpeed(0.7);
 		drive.turnDegreesAbsolute(215);
 		intakeMotors.move(127);
-		drive.driveTiles(3300);
+		drive.driveTiles(3000);
 
 	}
 	else {
@@ -222,7 +229,7 @@ void autonomous()
 		pros::delay(800);
 		intakeMotors.brake();
 		arm.move(127);
-		pros::delay(900);
+		pros::delay(700);
 		arm.brake();
 		
 		//back up and grab mogo
@@ -250,7 +257,8 @@ void autonomous()
 		conveyorMotors.move(127);
 		drive.turnDegreesAbsolute(0);
 		drive.driveTiles(900);
-		drive.driveTiles(-900);
+		drive.driveTiles(100);
+		drive.driveTiles(-1000);
 		pros::delay(200);
 
 		//turn to clear corner
@@ -305,6 +313,7 @@ void opcontrol()
 {
 	bool togMOGO = 0;
 	bool togWING = 0;
+	bool togARM = 0;
 	//arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	while(true)
 	{	
@@ -350,6 +359,19 @@ void opcontrol()
 				togWING = 1;
 			wing.set_value(togWING);
 		}
+
+		//ARM BRAKE
+		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B) ) {
+			if(togARM == 1) {
+				togARM = 0;
+				arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			}
+				
+			else {
+				togARM = 1;
+				arm.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+			}
+		}
 		
 		//intake / conveyor
 		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
@@ -374,16 +396,6 @@ void opcontrol()
 		{
 			arm.move_velocity(-600);
 		}
-		// else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
-		// {
-		// 	arm.move_velocity(-600);
-		// 	pros::delay(750);
-		// }
-		// else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_UP))
-		// {
-		// 	arm.move_velocity(600);
-		// 	pros::delay(750);
-		// }
 		else
 		{
 			arm.brake();
