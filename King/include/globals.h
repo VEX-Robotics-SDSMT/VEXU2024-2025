@@ -6,8 +6,9 @@
 #include "pros/adi.hpp"
 
 #define INERTIAL_SENSOR 18
-#define ENCODER_TOP_L 6
-#define ENCODER_BOTTOM_L 7
+#define ENCODER_TOP_L 5
+#define ENCODER_BOTTOM_L 6
+#define LIMIT_SWITCH 4
 
 #define L_FRONT 19
 #define L_MID 16
@@ -32,6 +33,7 @@
 #define ROLLER_MOTOR_GEARSET greenGearbox
 
 extern pros::Controller MasterController;
+extern pros::ADIDigitalIn limitSwitch;
 
 extern pros::Imu intertialSensor;
 extern pros::ADIEncoder driveEncoder;

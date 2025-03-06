@@ -4,7 +4,8 @@
 pros::Controller MasterController (pros::E_CONTROLLER_MASTER);
 
 pros::Imu intertialSensor(INERTIAL_SENSOR);
-pros::ADIEncoder driveEncoder(ENCODER_TOP_L, ENCODER_BOTTOM_L, false);
+pros::ADIEncoder driveEncoder(ENCODER_TOP_L, ENCODER_BOTTOM_L, true);
+pros::ADIDigitalIn limitSwitch(LIMIT_SWITCH);
 
 //pros::GPS gps(VEX_GPS);
 
