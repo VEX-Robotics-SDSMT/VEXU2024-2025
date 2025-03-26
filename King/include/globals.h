@@ -26,6 +26,7 @@
 
 #define MOGO 1
 #define WING 2
+#define RATCHET 3
 
 
 #define INTAKE_MOTOR_GEARSET redGearbox
@@ -63,6 +64,8 @@ extern Mines::MinesMotorGroup intakeMotors;
 
 extern pros::ADIDigitalOut mogo;
 extern pros::ADIDigitalOut wing;
+extern pros::ADIDigitalOut ratchet;
+
 
 enum Color { red, blue, purple };
 extern pros::Motor string;

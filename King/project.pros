@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "KingSKILLS",
+    "project_name": "KingBLUE",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -310,8 +310,8 @@
     },
     "upload_options": {
       "icon": "clawbot",
-      "description": "KingSKILLS",
-      "slot": 3
+      "description": "KingBLUE",
+      "slot": 2
     }
   }
 }

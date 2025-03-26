@@ -178,13 +178,15 @@ void autonomous()
 		drive.turnDegreesAbsolute(90);
 		while(limitSwitch.get_value())
 			arm.move(-127);
-		pros::delay(5);
 		arm.brake();
 		intakeMotors.move(90);
 		drive.driveTiles(1000);
 		drive.turnDegreesAbsolute(52);
-		pros::delay(2000);
+		pros::delay(1000);
 		intakeMotors.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+		intakeMotors.brake();
+		intakeMotors.move(-90);
+		pros::delay(50);
 		intakeMotors.brake();
 		drive.driveTiles(925);
 		arm.move(-127);
@@ -196,9 +198,9 @@ void autonomous()
 	}
 	else // Red auto
 	{
-		drive.driveTiles(-2530);
+		drive.driveTiles(-2580);
 		mogo.set_value(1);
-		drive.driveTiles(1580);
+		drive.driveTiles(1630);
 		mogo.set_value(0);
 		drive.driveTiles(200);
 		drive.setMaxDriveSpeed(0.3);
@@ -215,7 +217,7 @@ void autonomous()
 		while(limitSwitch.get_value())
 			arm.move(-127);
 		arm.move(127);
-		pros::delay(85);
+		pros::delay(110);
 		arm.brake();
 		drive.driveTiles(1200);
 		pros::delay(2000);
@@ -263,6 +265,8 @@ void opcontrol()
 {
 	bool togMOGO = 0;
 	bool togWING = 0;
+	bool ratchetTog = 0;
+	bool armTarget = 0;
 	arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	//arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	while(true)
@@ -293,7 +297,7 @@ void opcontrol()
 		driveLoop(leftDriveMotors, rightDriveMotors, leftVelocity, rightVelocity);
 
 		//MOGO
-		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A) || MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP)) {
+		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
 			if(togMOGO == 1)
 				togMOGO = 0;
 			else
@@ -302,12 +306,20 @@ void opcontrol()
 		}
 
 		//WING
-		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X) || MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
 			if(togWING == 1)
 				togWING = 0;
 			else
 				togWING = 1;
 			wing.set_value(togWING);
+		}
+
+		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+			if(ratchetTog == 1)
+				ratchetTog = 0;
+			else
+				ratchetTog = 1;
+			ratchet.set_value(ratchetTog);
 		}
 		
 		//intake / conveyor
@@ -333,21 +345,33 @@ void opcontrol()
 		{
 			arm.move_velocity(-600);
 		}
-		// else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
-		// {
-		// 	arm.move_velocity(-600);
-		// 	pros::delay(750);
-		// }
-		// else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_UP))
-		// {
-		// 	arm.move_velocity(600);
-		// 	pros::delay(750);
-		// }
+		else if(armTarget == 1)
+		{
+			arm.move_velocity(-127);
+			if(!limitSwitch.get_value())
+				armTarget = 0;
+		}
 		else
 		{
 			arm.brake();
 		}
 
+		if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP))
+		{
+			if(armTarget == 0)
+				armTarget = 1;
+		}
+
+		// if(MasterController.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN))
+		// {
+		// 	while(limitSwitch.get_value())
+		// 		arm.move(-127);
+		// 	arm.move(127);
+		// 	pros::delay(110);
+		// 	arm.brake();
+		// }
+
+		
 		//*********************************************
 	}
 }
