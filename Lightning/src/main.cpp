@@ -42,6 +42,7 @@ void initialize()
 	//vision.set_signature(RED_GOAL_SIG_ID, &RED_GOAL_SIG);
 	//pros::vision_signature_s_t BLUE_GOAL_SIG = vision.signature_from_utility(2, -3073, -1323, -2198, 4405, 9923, 7164, 1.5, 0);
 	//vision.set_signature(BLUE_GOAL_SIG_ID, &BLUE_GOAL_SIG);
+	wing.set_value(1);
 }
 
 /**
@@ -220,10 +221,11 @@ void autonomous()
 	else {
 		//MATCH AUTO RED/BLU 30sec
 		//place preload on alliance stake
+		intake.move(-127);
 		arm.move(127);
 		pros::delay(500);
 		arm.move(-127);
-		pros::delay(700);
+		pros::delay(650);
 		arm.brake();
 		intakeMotors.move(127);
 		pros::delay(800);
@@ -231,6 +233,7 @@ void autonomous()
 		arm.move(127);
 		pros::delay(700);
 		arm.brake();
+		intake.move(127);
 		
 		//back up and grab mogo
 		drive.driveTiles(100);
@@ -241,17 +244,17 @@ void autonomous()
 		arm.brake();	
 		drive.turnDegreesAbsolute(-140);
 		drive.setMaxDriveSpeed(0.3);
-		drive.driveTiles(-1100);
+		drive.driveTiles(-1200);
 		mogo.set_value(1);
 		
 		//drive forward to get ring on line
 		drive.setMaxDriveSpeed(.7);
 		intakeMotors.move(127);
-		drive.driveTiles(2080);
+		drive.driveTiles(2250);
 		pros::delay(200);
 
 		//back up to get ring by alliance stake
-		drive.driveTiles(-1800);
+		drive.driveTiles(-1900);
 		conveyorMotors.move(-127);
 		pros::delay(200);
 		conveyorMotors.move(127);
@@ -265,7 +268,7 @@ void autonomous()
 		intakeMotors.brake();
 		drive.turnDegreesAbsolute(-145);
 		conveyorMotors.move(127);
-		drive.driveTiles(2200);
+		drive.driveTiles(2300);
 		drive.turnDegreesAbsolute(-100);
 		conveyorMotors.brake();
 		wing.set_value(1);
@@ -284,7 +287,7 @@ void autonomous()
 		//touch ladder with arm
 		
 		wing.set_value(0);
-		drive.driveTiles(2600);
+		drive.driveTiles(2500);
 		arm.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		arm.move(127);
 		pros::delay(300);
@@ -311,10 +314,11 @@ void autonomous()
 
 void opcontrol()
 {
+	wing.set_value(0);
 	bool togMOGO = 0;
 	bool togWING = 0;
-	bool togARM = 0;
-	//arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	bool togARM = 1;
+	arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	while(true)
 	{	
 		// ********************DRIVE********************

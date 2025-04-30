@@ -350,16 +350,16 @@ void opcontrol()
 	{	
 		// ********************DRIVE********************
 		// 2 stick arcade
-		//double leftAxisY = MasterController.get_analog(axisLeftY);
-		//double rightAxisX = MasterController.get_analog(axisRightX);
-		//double leftVelocity = ((leftAxisY + rightAxisX));
-		//double rightVelocity = ((leftAxisY - rightAxisX));
+		double leftAxisY = MasterController.get_analog(axisLeftY);
+		double rightAxisX = MasterController.get_analog(axisRightX);
+		double leftVelocity = -((leftAxisY + rightAxisX));
+		double rightVelocity = -((leftAxisY - rightAxisX));
 
 		// 1 stick arcade
-		double leftAxisY = MasterController.get_analog(axisLeftY);
-		double leftAxisX = MasterController.get_analog(axisLeftX);
-		double leftVelocity = ((leftAxisY + leftAxisX));
-		double rightVelocity = ((leftAxisY - leftAxisX));
+		// double leftAxisY = MasterController.get_analog(axisLeftY);
+		// double leftAxisX = MasterController.get_analog(axisLeftX);
+		// double leftVelocity = ((leftAxisY + leftAxisX));
+		// double rightVelocity = ((leftAxisY - leftAxisX));
 		// double rightAxisX = MasterController.get_analog(axisRightX);
 		// double aimVelocityLeft = (rightAxisX) * 0.06;
 		// double aimVelocityRight = -rightAxisX * 0.06;

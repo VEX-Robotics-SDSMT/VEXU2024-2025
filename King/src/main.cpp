@@ -269,8 +269,8 @@ void opcontrol()
 	{	
 		// ********************DRIVE********************
 		// 2 stick arcade
-		// double leftAxisY = MasterController.get_analog(axisRightY);
-		// double rightAxisX = MasterController.get_analog(axisLeftX);
+		// double leftAxisY = MasterController.get_analog(axisLeftY);
+		// double rightAxisX = MasterController.get_analog(axisRightX);
 		// double leftVelocity = ((leftAxisY + rightAxisX));
 		// double rightVelocity = ((leftAxisY - rightAxisX));
 
@@ -325,11 +325,11 @@ void opcontrol()
 		}
 
 		//arm
-		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+		if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
 		{
 			arm.move_velocity(600);
 		}
-		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		else if(MasterController.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 		{
 			arm.move_velocity(-600);
 		}

@@ -9,10 +9,10 @@
 #define TRACKING_TOP 3
 #define TRACKING_BOT 4 
 
-#define L_FRONT 12
-#define L_MID 13
+#define L_FRONT 13
+#define L_MID 20
 #define L_REAR 3
-#define R_FRONT 20
+#define R_FRONT 12
 #define R_MID 10
 #define R_REAR 18
 #define U_INTAKE 1
