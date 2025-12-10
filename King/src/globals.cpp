@@ -36,6 +36,8 @@ Mines::MinesMotorGroup conveyorMotors(conveyorVector);
 Mines::MinesMotorGroup intakeMotors(intakeVector); //combines conveyor and intake
 pros::ADIDigitalOut mogo(MOGO);
 pros::ADIDigitalOut wing(WING);
+pros::ADIDigitalOut ratchet(RATCHET);
+
 
 double axisPercentBlue = 600.0 / 127;
 double axisPercentGreen = 200.0 / 127;
@@ -51,5 +53,5 @@ uint8_t BLUE_GOAL_SIG_ID = 2;
 int requiredColorLoops = 3;
 const double ROLLER_TIMEOUT = 3000;
 
-bool skills = true;
-bool red_team = true;
+bool skills = false;
+bool red_team = false;
